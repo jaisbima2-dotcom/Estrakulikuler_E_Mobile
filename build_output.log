@@ -1,0 +1,1301 @@
+
+> kik_supabase@0.1.0 build
+> next build
+
+▲ Next.js 16.2.2 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 13 errors:
+./app/Profile_Basket/page.tsx:948:25
+the name `HomePage` is defined multiple times
+  [90m946 |[0m
+  [90m947 |[0m [90m// ── Main Page Component ────────────────────────────────────────────[0m
+[31m[1m>[0m [90m948 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mHomePage[0m() {
+  [90m    |[0m                         [31m[1m^^^^^^^^[0m
+  [90m949 |[0m   [36mconst[0m revealRefs = useRef<([33mHTMLElement[0m | [36mnull[0m)[]>([]);
+  [90m950 |[0m
+  [90m951 |[0m   [90m// Reveal on scroll[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:824:7
+the name `IconArrowRight` is defined multiple times
+  [90m822 |[0m [90m// ── Icons ────────────────────────────────────────────[0m
+  [90m823 |[0m
+[31m[1m>[0m [90m824 |[0m [36mconst[0m [33mIconArrowRight[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^^^^^^^[0m
+  [90m825 |[0m   <svg
+  [90m826 |[0m     width=[32m"16"[0m
+  [90m827 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:837:7
+the name `IconClock` is defined multiple times
+  [90m835 |[0m );
+  [90m836 |[0m
+[31m[1m>[0m [90m837 |[0m [36mconst[0m [33mIconClock[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^^[0m
+  [90m838 |[0m   <svg
+  [90m839 |[0m     width=[32m"16"[0m
+  [90m840 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:869:7
+the name `IconLocation` is defined multiple times
+  [90m867 |[0m );
+  [90m868 |[0m
+[31m[1m>[0m [90m869 |[0m [36mconst[0m [33mIconLocation[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^^^^^[0m
+  [90m870 |[0m   <svg
+  [90m871 |[0m     width=[32m"16"[0m
+  [90m872 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:900:7
+the name `IconMail` is defined multiple times
+  [90m898 |[0m );
+  [90m899 |[0m
+[31m[1m>[0m [90m900 |[0m [36mconst[0m [33mIconMail[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^[0m
+  [90m901 |[0m   <svg
+  [90m902 |[0m     width=[32m"16"[0m
+  [90m903 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:885:7
+the name `IconPhone` is defined multiple times
+  [90m883 |[0m );
+  [90m884 |[0m
+[31m[1m>[0m [90m885 |[0m [36mconst[0m [33mIconPhone[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^^[0m
+  [90m886 |[0m   <svg
+  [90m887 |[0m     width=[32m"16"[0m
+  [90m888 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:853:7
+the name `IconUser` is defined multiple times
+  [90m851 |[0m );
+  [90m852 |[0m
+[31m[1m>[0m [90m853 |[0m [36mconst[0m [33mIconUser[0m = () => (
+  [90m    |[0m       [31m[1m^^^^^^^^[0m
+  [90m854 |[0m   <svg
+  [90m855 |[0m     width=[32m"16"[0m
+  [90m856 |[0m     height=[32m"16"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:923:10
+the name `StatBadge` is defined multiple times
+  [90m921 |[0m };
+  [90m922 |[0m
+[31m[1m>[0m [90m923 |[0m [36mfunction[0m [33mStatBadge[0m({ number, label, delay }: [33mStatBadgeProps[0m) {
+  [90m    |[0m          [31m[1m^^^^^^^^^[0m
+  [90m924 |[0m   [36mreturn[0m (
+  [90m925 |[0m     <div
+  [90m926 |[0m       className=[32m"text-center animate-fade-in"[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:769:7
+the name `achievements` is defined multiple times
+  [90m767 |[0m ];
+  [90m768 |[0m
+[31m[1m>[0m [90m769 |[0m [36mconst[0m achievements = [
+  [90m    |[0m       [31m[1m^^^^^^^^^^^^[0m
+  [90m770 |[0m   {
+  [90m771 |[0m     title: [32m"Juara 1 DBL West Java Series"[0m,
+  [90m772 |[0m     sub: [32m"Provinsi"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:752:7
+the name `coaches` is defined multiple times
+  [90m750 |[0m ];
+  [90m751 |[0m
+[31m[1m>[0m [90m752 |[0m [36mconst[0m coaches = [
+  [90m    |[0m       [31m[1m^^^^^^^[0m
+  [90m753 |[0m   {
+  [90m754 |[0m     role: [32m"Pembina"[0m,
+  [90m755 |[0m     roleColor: [32m"blue"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:948:1
+the name `default` is exported multiple times
+  [90m 946 |[0m
+  [90m 947 |[0m [90m// ── Main Page Component ────────────────────────────────────────────[0m
+[31m[1m>[0m [90m 948 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mHomePage[0m() {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 949 |[0m   [36mconst[0m revealRefs = useRef<([33mHTMLElement[0m | [36mnull[0m)[]>([]);
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 950 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m 951 |[0m   [90m// Reveal on scroll[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 952 |[0m   useEffect(() => {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 953 |[0m     [36mconst[0m observer = [36mnew[0m [33mIntersectionObserver[0m(
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 954 |[0m       (entries) => {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 955 |[0m         entries.forEach((e) => {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 956 |[0m           [36mif[0m (e.isIntersecting) {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 957 |[0m             e.target.classList.add([32m"visible"[0m);
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 958 |[0m           }
+  [90m     |[0m [31m[1m^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 959 |[0m         });
+  [90m     |[0m [31m[1m^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 960 |[0m       },
+  [90m     |[0m [31m[1m^^^^^^^^[0m
+[31m[1m>[0m [90m 961 |[0m       { threshold: [35m0.12[0m },
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 962 |[0m     );
+  [90m     |[0m [31m[1m^^^^^^[0m
+[31m[1m>[0m [90m 963 |[0m     revealRefs.current.forEach((el) => el && observer.observe(el));
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 964 |[0m     [36mreturn[0m () => observer.disconnect();
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 965 |[0m   }, []);
+  [90m     |[0m [31m[1m^^^^^^^^^[0m
+[31m[1m>[0m [90m 966 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m 967 |[0m   [36mconst[0m addReveal = (el: [33mHTMLElement[0m | [36mnull[0m, i: number) => {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 968 |[0m     revealRefs.current[i] = el;
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 969 |[0m   };
+  [90m     |[0m [31m[1m^^^^[0m
+[31m[1m>[0m [90m 970 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m 971 |[0m   [36mreturn[0m (
+  [90m     |[0m [31m[1m^^^^^^^^^^[0m
+[31m[1m>[0m [90m 972 |[0m     <>
+  [90m     |[0m [31m[1m^^^^^^[0m
+[31m[1m>[0m [90m 973 |[0m       {[90m/* ── HERO ──────────────────────────────────────────────────...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 974 |[0m       <section className=[32m"relative h-screen min-h-[680px] flex items...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 975 |[0m         {[90m/* Background Image via Unsplash */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 976 |[0m         <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 977 |[0m           className=[32m"absolute inset-0 bg-cover bg-center bg-no-repeat"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 978 |[0m           style={{
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 979 |[0m             backgroundImage: [32m`url('https://images.unsplash.com/photo...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 980 |[0m             filter: [32m"blur(1px) brightness(0.6)"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 981 |[0m             transform: [32m"scale(1.04)"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 982 |[0m           }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 983 |[0m         />
+  [90m     |[0m [31m[1m^^^^^^^^^^[0m
+[31m[1m>[0m [90m 984 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m 985 |[0m         {[90m/* Gradient Overlay — dark navy left, semi-transparent righ...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 986 |[0m         <div className=[32m"absolute inset-0 bg-gradient-to-r from-[#061...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 987 |[0m         <div className=[32m"absolute inset-0 bg-gradient-to-t from-[#061...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 988 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m 989 |[0m         {[90m/* ── Content ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 990 |[0m         <div className=[32m"relative z-10 max-w-7xl mx-auto px-6 w-full ...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 991 |[0m           {[90m/* LEFT — Text */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 992 |[0m           <div className=[32m"space-y-8 hero-left"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 993 |[0m             {[90m/* Badge */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 994 |[0m             <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 995 |[0m               className=[32m"inline-flex items-center gap-2 bg-white/10 ...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 996 |[0m               style={{ animationDelay: [32m"0.1s"[0m, animationFillMode: [32m"b...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 997 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 998 |[0m               <span className=[32m"w-2 h-2 rounded-full bg-[#f97316] ani...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 999 |[0m               <span
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1000 |[0m                 className=[32m"text-white/85 text-xs font-semibold upper...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1001 |[0m                 style={{ fontFamily: [32m"'DM Sans', sans-serif"[0m }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1002 |[0m               >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1003 |[0m                 [33mEkstrakurikuler[0m [33mAktif[0m · [35m2025[0m/[35m2026[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1004 |[0m               </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1005 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1006 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1007 |[0m             {[90m/* Headline */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1008 |[0m             <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1009 |[0m               className=[32m"animate-fade-in"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1010 |[0m               style={{ animationDelay: [32m"0.25s"[0m, animationFillMode: [32m"...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1011 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1012 |[0m               <h1
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1013 |[0m                 className=[32m"text-white leading-[0.9] uppercase"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1014 |[0m                 style={{
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1015 |[0m                   fontFamily: [32m"'Barlow Condensed', sans-serif"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1016 |[0m                   fontSize: [32m"clamp(3rem, 8vw, 6rem)"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1017 |[0m                   fontWeight: [35m900[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1018 |[0m                 }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1019 |[0m               >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1020 |[0m                 [33mBasket[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1021 |[0m                 <br />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1022 |[0m                 <span className=[32m"text-[#f97316]"[0m>[33mSMKN[0m [35m1[0m</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1023 |[0m                 <br />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1024 |[0m                 [33mCibinong[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1025 |[0m               </h1>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1026 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1027 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1028 |[0m             {[90m/* Divider */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1029 |[0m             <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1030 |[0m               className=[32m"flex items-center gap-3 animate-fade-in"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1031 |[0m               style={{ animationDelay: [32m"0.4s"[0m, animationFillMode: [32m"b...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1032 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1033 |[0m               <div className=[32m"h-px w-10 bg-[#f97316]"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1034 |[0m               <div className=[32m"h-px flex-1 bg-white/10"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1035 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1036 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1037 |[0m             {[90m/* Description */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1038 |[0m             <p
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1039 |[0m               className=[32m"text-white/65 text-base md:text-lg leading-...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1040 |[0m               style={{
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1041 |[0m                 fontFamily: [32m"'DM Sans', sans-serif"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1042 |[0m                 animationDelay: [32m"0.5s"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1043 |[0m                 animationFillMode: [32m"both"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1044 |[0m               }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1045 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1046 |[0m               [33mWadah[0m bagi siswa untuk mengembangkan bakat, disiplin, ...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1047 |[0m               di bidang olahraga basket. [33mBersama[0m kami, cetak sejarah...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1048 |[0m               lapangan.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1049 |[0m             </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1050 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1051 |[0m             {[90m/* CTA Buttons */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1052 |[0m             <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1053 |[0m               className=[32m"flex flex-wrap gap-4 animate-fade-in"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1054 |[0m               style={{
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1055 |[0m                 animationDelay: [32m"0.65s"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1056 |[0m                 animationFillMode: [32m"both"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1057 |[0m                 marginTop: [32m"1.75rem"[0m,
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1058 |[0m               }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1059 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1060 |[0m               <button
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1061 |[0m                 className=[32m"btn-primary group flex items-center gap-2...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1062 |[0m                 style={{ fontFamily: [32m"'DM Sans', sans-serif"[0m }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1063 |[0m               >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1064 |[0m                 [33mDaftar[0m [33mSekarang[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1065 |[0m                 <svg
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1066 |[0m                   className=[32m"btn-arrow w-4 h-4"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1067 |[0m                   fill=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1068 |[0m                   viewBox=[32m"0 0 24 24"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1069 |[0m                   stroke=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1070 |[0m                   strokeWidth=[32m"2.5"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1071 |[0m                 >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1072 |[0m                   <path
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1073 |[0m                     strokeLinecap=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1074 |[0m                     strokeLinejoin=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1075 |[0m                     d=[32m"M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1076 |[0m                   />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1077 |[0m                 </svg>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1078 |[0m               </button>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1079 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1080 |[0m               <button
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1081 |[0m                 className=[32m"btn-secondary group flex items-center gap...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1082 |[0m                 style={{ fontFamily: [32m"'DM Sans', sans-serif"[0m }}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1083 |[0m               >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1084 |[0m                 <svg
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1085 |[0m                   className=[32m"w-4 h-4 text-[#f97316]"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1086 |[0m                   fill=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1087 |[0m                   viewBox=[32m"0 0 24 24"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1088 |[0m                   stroke=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1089 |[0m                   strokeWidth=[32m"2"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1090 |[0m                 >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1091 |[0m                   <rect x=[32m"3"[0m y=[32m"4"[0m width=[32m"18"[0m height=[32m"18"[0m rx=[32m"2"[0m ry.[32m..[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1092 |[0m                   <line x1=[32m"16"[0m y1=[32m"2"[0m x2=[32m"16"[0m y2=[32m"6"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1093 |[0m                   <line x1=[32m"8"[0m y1=[32m"2"[0m x2=[32m"8"[0m y2=[32m"6"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1094 |[0m                   <line x1=[32m"3"[0m y1=[32m"10"[0m x2=[32m"21"[0m y2=[32m"10"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1095 |[0m                 </svg>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1096 |[0m                 [33mLihat[0m [33mJadwal[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1097 |[0m               </button>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1098 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1099 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1100 |[0m             {[90m/* Stats Row */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1101 |[0m             <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1102 |[0m               className=[32m"flex gap-8 pt-4 border-t border-white/10 an...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1103 |[0m               style={{ animationDelay: [32m"0.8s"[0m, animationFillMode: [32m"b...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1104 |[0m             >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1105 |[0m               <[33mStatBadge[0m number=[32m"3×"[0m label=[32m"Juara Provinsi"[0m delay=[32m"0...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1106 |[0m               <div className=[32m"w-px bg-white/10"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1107 |[0m               <[33mStatBadge[0m number=[32m"45+"[0m label=[32m"Anggota Aktif"[0m delay=[32m"1..[0m.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1108 |[0m               <div className=[32m"w-px bg-white/10"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1109 |[0m               <[33mStatBadge[0m number=[32m"8th"[0m label=[32m"Tahun Berdiri"[0m delay=[32m"1...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1110 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1111 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1112 |[0m         </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1113 |[0m       </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1114 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1115 |[0m       <main className=[32m"page-root"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1116 |[0m         {[90m/* ── SECTION 1: TENTANG KAMI ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1117 |[0m         <section className=[32m"section-about"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1118 |[0m           <div className=[32m"container-md"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1119 |[0m             <div className=[32m"about-badge"[0m>[33mEkstrakurikuler[0m [33mResmi[0m</div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1120 |[0m             <h1 className=[32m"about-title text-white"[0m>[33mTentang[0m [33mKami[0m</h1>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1121 |[0m             <p className=[32m"about-para text-white/90"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1122 |[0m               [33mEkstrakurikuler[0m [33mBasket[0m [33mSMKN[0m [35m1[0m [33mCibinong[0m adalah wadah bagi
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1123 |[0m               siswa-siswi yang memiliki semangat dan passion dalam o...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1124 |[0m               basket. [33mKami[0m hadir sebagai ruang pengembangan bakat, m...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1125 |[0m               karakter tangguh, dan mencetak generasi atlet pelajar ...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1126 |[0m               berprestasi di tingkat daerah maupun nasional.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1127 |[0m             </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1128 |[0m             <p className=[32m"about-para text-white/90"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1129 |[0m               [33mBerdiri[0m sejak tahun [35m2010[0m, kami telah mengukir berbagai...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1130 |[0m               bergengsi dan terus berkomitmen memberikan pembinaan t...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1131 |[0m               [33mDengan[0m pelatih berpengalaman dan fasilitas yang menduk...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1132 |[0m               anggota dibimbing untuk berkembang baik di lapangan ma...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1133 |[0m               kehidupan sehari-hari.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1134 |[0m             </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1135 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1136 |[0m         </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1137 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1138 |[0m         {[90m/* ── SECTION 2: JADWAL LATIHAN ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1139 |[0m         <section className=[32m"section-schedule"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1140 |[0m           <div className=[32m"container-lg"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1141 |[0m             <div className=[32m"section-header"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1142 |[0m               <div className=[32m"section-title-row"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1143 |[0m                 <span className=[32m"icon-accent"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1144 |[0m                   <[33mIconClock[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1145 |[0m                 </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1146 |[0m                 <h2 className=[32m"section-title"[0m>[33mJadwal[0m [33mLatihan[0m</h2>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1147 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1148 |[0m               <p className=[32m"section-subtitle"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1149 |[0m                 [33mRutin[0m setiap minggu konsisten membangun kemampuan te...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1150 |[0m               </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1151 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1152 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1153 |[0m             <div className=[32m"schedule-grid"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1154 |[0m               {scheduleData.map((item) => (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1155 |[0m                 <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1156 |[0m                   key={item.day}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1157 |[0m                   className={[32m`schedule-card [0m${item.highlight ? [32m"sche...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1158 |[0m                 >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1159 |[0m                   {[90m/* Card Header */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1160 |[0m                   <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1161 |[0m                     className={[32m`schedule-card__header [0m${item.highlig...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1162 |[0m                   >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1163 |[0m                     <span className=[32m"schedule-card__day"[0m>{item.day}<...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1164 |[0m                     <span className=[32m"schedule-card__time"[0m>{item.time...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1165 |[0m                   </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1166 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1167 |[0m                   {[90m/* Card Body */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1168 |[0m                   <div className=[32m"schedule-card__body"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1169 |[0m                     <p className=[32m"schedule-card__activity"[0m>{item.act...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1170 |[0m                     <p className=[32m"schedule-card__location"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1171 |[0m                       <span className=[32m"icon-sm"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1172 |[0m                         <[33mIconLocation[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1173 |[0m                       </span>{[32m" "[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1174 |[0m                       {item.location}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1175 |[0m                     </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1176 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1177 |[0m                     {[90m/* Absensi */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1178 |[0m                     <div className=[32m"schedule-card__absensi"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1179 |[0m                       <span className=[32m"absensi-label"[0m>[33mABSENSI[0m</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1180 |[0m                       <span
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1181 |[0m                         className={[32m`absensi-status [0m${item.absensi ==..[32m.[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1182 |[0m                       >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1183 |[0m                         {item.absensi === [32m"open"[0m ? [32m"Dibuka"[0m : [32m"Ditut...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1184 |[0m                       </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1185 |[0m                     </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1186 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1187 |[0m                     {[90m/* Button */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1188 |[0m                     {item.absensi === [32m"open"[0m ? (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1189 |[0m                       <button className=[32m"btn-absensi btn-absensi--ac...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1190 |[0m                         [33mIsi[0m [33mAbsensi[0m [33mSekarang[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1191 |[0m                       </button>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1192 |[0m                     ) : (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1193 |[0m                       <button
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1194 |[0m                         className=[32m"btn-absensi btn-absensi--disabled"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1195 |[0m                         disabled
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1196 |[0m                       >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1197 |[0m                         [33mAbsensi[0m [33mDitutup[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1198 |[0m                       </button>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1199 |[0m                     )}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1200 |[0m                   </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1201 |[0m                 </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1202 |[0m               ))}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1203 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1204 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1205 |[0m         </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1206 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1207 |[0m         {[90m/* ── SECTION 3: PEMBINA & PELATIH ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1208 |[0m         <section className=[32m"section-coaches"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1209 |[0m           <div className=[32m"container-lg"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1210 |[0m             <div className=[32m"section-header"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1211 |[0m               <div className=[32m"section-title-row"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1212 |[0m                 <span className=[32m"icon-accent"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1213 |[0m                   <[33mIconUser[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1214 |[0m                 </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1215 |[0m                 <h2 className=[32m"section-title"[0m>[33mPembina[0m &amp; [33mPelatih[0m<...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1216 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1217 |[0m               <p className=[32m"section-subtitle"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1218 |[0m                 [33mDipandu[0m oleh tenaga profesional berpengalaman
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1219 |[0m               </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1220 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1221 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1222 |[0m             <div className=[32m"coaches-grid"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1223 |[0m               {coaches.map((coach) => (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1224 |[0m                 <div key={coach.name} className=[32m"coach-card"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1225 |[0m                   <div className=[32m"coach-avatar"[0m>{coach.initials}</div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1226 |[0m                   <div className=[32m"coach-info"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1227 |[0m                     <span
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1228 |[0m                       className={[32m`coach-role [0m${coach.roleColor === [32m"...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1229 |[0m                     >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1230 |[0m                       {coach.role}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1231 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1232 |[0m                     <h3 className=[32m"coach-name"[0m>{coach.name}</h3>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1233 |[0m                     <p className=[32m"coach-desc"[0m>{coach.desc}</p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1234 |[0m                   </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1235 |[0m                 </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1236 |[0m               ))}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1237 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1238 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1239 |[0m         </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1240 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1241 |[0m         {[90m/* ── SECTION 4: PRESTASI & PENGHARGAAN ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1242 |[0m         <section className=[32m"section-achievements"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1243 |[0m           <div className=[32m"container-md"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1244 |[0m             <div className=[32m"achievements-header"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1245 |[0m               <span className=[32m"badge-pill"[0m>[33mKebanggaan[0m [33mKami[0m</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1246 |[0m               <h2 className=[32m"achievements-title"[0m>[33mPrestasi[0m &amp; [33mPeng...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1247 |[0m               <p className=[32m"achievements-subtitle"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1248 |[0m                 [33mRekam[0m jejak terbaik [33mBasket[0m [33mSMKN[0m [35m1[0m [33mCibinong[0m di berbag...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1249 |[0m               </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1250 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1251 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1252 |[0m             <div className=[32m"achievements-list"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1253 |[0m               {achievements.map((item) => {
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1254 |[0m                 [36mconst[0m medal = medalConfig[item.medal];
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1255 |[0m                 [36mreturn[0m (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1256 |[0m                   <div key={item.title} className=[32m"achievement-item"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1257 |[0m                     {[90m/* Left */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1258 |[0m                     <div className=[32m"achievement-left"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1259 |[0m                       <div className=[32m"achievement-icon-box"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1260 |[0m                         <span className=[32m"achievement-trophy"[0m>🏆</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1261 |[0m                         <span className=[32m"achievement-year"[0m>{item.yea...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1262 |[0m                       </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1263 |[0m                       <div className=[32m"achievement-text"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1264 |[0m                         <p className=[32m"achievement-name"[0m>{item.title}...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1265 |[0m                         <p className=[32m"achievement-sub"[0m>{item.sub}</p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1266 |[0m                       </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1267 |[0m                     </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1268 |[0m                     {[90m/* Right */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1269 |[0m                     <span className={[32m`medal-badge [0m${medal.bg[32m} [0m${meda...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1270 |[0m                       {medal.label}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1271 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1272 |[0m                   </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1273 |[0m                 );
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1274 |[0m               })}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1275 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1276 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1277 |[0m         </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1278 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1279 |[0m         {[90m/* ──────────── CTA ──────────── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1280 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1281 |[0m         <section className=[32m"cta-section"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1282 |[0m           <div
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1283 |[0m             className=[32m"cta-card reveal"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1284 |[0m             ref={(el) => addReveal(el [36mas[0m [33mHTMLElement[0m | [36mnull[0m, [35m20[0m)}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1285 |[0m           >
+  [90m     |[0m [31m[1m^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1286 |[0m             <div className=[32m"cta-content"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1287 |[0m               <div className=[32m"cta-badge"[0m>[33mMulai[0m [33mSekarang[0m</div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1288 |[0m               <h2 className=[32m"cta-title"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1289 |[0m                 [33mSiap[0m [33mBergabung[0m dengan
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1290 |[0m                 <br />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1291 |[0m                 [33mEkskul[0m [33mFavoritmu[0m?
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1292 |[0m               </h2>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1293 |[0m               <p className=[32m"cta-desc"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1294 |[0m                 [33mJangan[0m lewatkan kesempatan untuk mengembangkan bakat...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1295 |[0m                 jaringan, dan meraih prestasi bersama [33mSMKN[0m [35m1[0m [33mCibinong[0m.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1296 |[0m               </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1297 |[0m               <div className=[32m"cta-buttons"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1298 |[0m                 <a href=[32m"#"[0m className=[32m"btn-primary"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1299 |[0m                   [33mDaftar[0m [33mSekarang[0m <[33mIconArrowRight[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1300 |[0m                 </a>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1301 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1302 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1303 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1304 |[0m         </section>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1305 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1306 |[0m         {[90m/* ── SECTION 5: FOOTER ── */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1307 |[0m         <footer className=[32m"footer"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1308 |[0m           <div className=[32m"footer-container"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1309 |[0m             <div className=[32m"footer-grid"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1310 |[0m               {[90m/* Col 1 — Branding */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1311 |[0m               <div className=[32m"footer-col"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1312 |[0m                 <div className=[32m"footer-brand"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1313 |[0m                   <div className=[32m"footer-logo"[0m>[33mB[0m</div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1314 |[0m                   <span className=[32m"footer-brand-name"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1315 |[0m                     [33mBasket[0m [33mSMKN[0m [35m1[0m [33mCibinong[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1316 |[0m                   </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1317 |[0m                 </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1318 |[0m                 <p className=[32m"footer-brand-desc"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1319 |[0m                   [33mMembangun[0m atlet pelajar berprestasi dengan karakte...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1320 |[0m                   sejak [35m2010.[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1321 |[0m                 </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1322 |[0m                 <div className=[32m"footer-socials"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1323 |[0m                   <a href=[32m"#"[0m className=[32m"social-icon"[0m aria-label=[32m"In...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1324 |[0m                     <svg
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1325 |[0m                       width=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1326 |[0m                       height=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1327 |[0m                       viewBox=[32m"0 0 24 24"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1328 |[0m                       fill=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1329 |[0m                       stroke=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1330 |[0m                       strokeWidth=[32m"2"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1331 |[0m                       strokeLinecap=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1332 |[0m                       strokeLinejoin=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1333 |[0m                     >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1334 |[0m                       <rect x=[32m"2"[0m y=[32m"2"[0m width=[32m"20"[0m height=[32m"20"[0m rx=[32m"5.[0m..
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1335 |[0m                       <circle cx=[32m"12"[0m cy=[32m"12"[0m r=[32m"4"[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1336 |[0m                       <circle
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1337 |[0m                         cx=[32m"17.5"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1338 |[0m                         cy=[32m"6.5"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1339 |[0m                         r=[32m"1"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1340 |[0m                         fill=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1341 |[0m                         stroke=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1342 |[0m                       />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1343 |[0m                     </svg>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1344 |[0m                   </a>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1345 |[0m                   <a href=[32m"#"[0m className=[32m"social-icon"[0m aria-label=[32m"Yo...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1346 |[0m                     <svg
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1347 |[0m                       width=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1348 |[0m                       height=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1349 |[0m                       viewBox=[32m"0 0 24 24"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1350 |[0m                       fill=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1351 |[0m                       stroke=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1352 |[0m                       strokeWidth=[32m"2"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1353 |[0m                       strokeLinecap=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1354 |[0m                       strokeLinejoin=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1355 |[0m                     >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1356 |[0m                       <path d=[32m"M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1357 |[0m                       <polygon
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1358 |[0m                         points=[32m"9.75 15.02 15.5 12 9.75 8.98 9.75 15...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1359 |[0m                         fill=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1360 |[0m                         stroke=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1361 |[0m                       />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1362 |[0m                     </svg>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1363 |[0m                   </a>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1364 |[0m                   <a href=[32m"#"[0m className=[32m"social-icon"[0m aria-label=[32m"Wh...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1365 |[0m                     <svg
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1366 |[0m                       width=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1367 |[0m                       height=[32m"16"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1368 |[0m                       viewBox=[32m"0 0 24 24"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1369 |[0m                       fill=[32m"none"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1370 |[0m                       stroke=[32m"currentColor"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1371 |[0m                       strokeWidth=[32m"2"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1372 |[0m                       strokeLinecap=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1373 |[0m                       strokeLinejoin=[32m"round"[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1374 |[0m                     >
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1375 |[0m                       <path d=[32m"M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8...[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1376 |[0m                     </svg>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1377 |[0m                   </a>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1378 |[0m                 </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1379 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1380 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1381 |[0m               {[90m/* Col 3 — Jadwal */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1382 |[0m               <div className=[32m"footer-col"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1383 |[0m                 <h4 className=[32m"footer-col-title"[0m>[33mJadwal[0m [33mLatihan[0m</h4>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1384 |[0m                 <div className=[32m"footer-schedule-list"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1385 |[0m                   {[
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1386 |[0m                     { day: [32m"Senin"[0m, time: [32m"15.00 – 17.00"[0m },
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1387 |[0m                     { day: [32m"Rabu"[0m, time: [32m"15.00 – 17.00"[0m },
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1388 |[0m                     { day: [32m"Jumat"[0m, time: [32m"15.00 – 17.00"[0m },
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1389 |[0m                   ].map((s) => (
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1390 |[0m                     <div key={s.day} className=[32m"footer-schedule-row"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1391 |[0m                       <span className=[32m"footer-schedule-day"[0m>{s.day}<...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1392 |[0m                       <span className=[32m"footer-schedule-time"[0m>{s.time...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1393 |[0m                     </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1394 |[0m                   ))}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1395 |[0m                 </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1396 |[0m                 <p className=[32m"footer-location-note"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1397 |[0m                   <span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1398 |[0m                     <[33mIconLocation[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1399 |[0m                   </span>{[32m" "[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1400 |[0m                   [33mLapangan[0m [33mUtama[0m [33mSMKN[0m [35m1[0m [33mCibinong[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1401 |[0m                 </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1402 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1403 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1404 |[0m               {[90m/* Col 4 — Hubungi Kami */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1405 |[0m               <div className=[32m"footer-col"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1406 |[0m                 <h4 className=[32m"footer-col-title"[0m>[33mHubungi[0m [33mKami[0m</h4>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1407 |[0m                 <ul className=[32m"footer-contact-list"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1408 |[0m                   <li className=[32m"footer-contact-item"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1409 |[0m                     <span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1410 |[0m                       <[33mIconLocation[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1411 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1412 |[0m                     <span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1413 |[0m                       [33mJl[0m. [33mKaradenan[0m [33mNo[0m[35m.7[0m, [33mCibinong[0m, [33mBogor[0m, [33mJawa[0m [33mBara.[0m.[35m.[0m
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1414 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1415 |[0m                   </li>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1416 |[0m                   <li className=[32m"footer-contact-item"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1417 |[0m                     <span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1418 |[0m                       <[33mIconPhone[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1419 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1420 |[0m                     <span>+[35m62[0m [35m812[0m-[35m3456[0m-[35m7890[0m</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1421 |[0m                   </li>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1422 |[0m                   <li className=[32m"footer-contact-item"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1423 |[0m                     <span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1424 |[0m                       <[33mIconMail[0m />
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1425 |[0m                     </span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1426 |[0m                     <span>basket@smkn1cibinong.sch.id</span>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1427 |[0m                   </li>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1428 |[0m                 </ul>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1429 |[0m               </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1430 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1431 |[0m
+  [90m     |[0m [31m[1m^[0m
+[31m[1m>[0m [90m1432 |[0m             {[90m/* Footer Bottom */[0m}
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1433 |[0m             <div className=[32m"footer-bottom"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1434 |[0m               <p className=[32m"footer-bottom-left"[0m>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1435 |[0m                 © [35m2026[0m [33mEkstrakurikuler[0m [33mBasket[0m [33mSMKN[0m [35m1[0m [33mCibinong[0m. [33mSemua[0m...
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1436 |[0m                 dilindungi.
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1437 |[0m               </p>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1438 |[0m             </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1439 |[0m           </div>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1440 |[0m         </footer>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1441 |[0m       </main>
+  [90m     |[0m [31m[1m^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m1442 |[0m     </>
+  [90m     |[0m [31m[1m^^^^^^^[0m
+[31m[1m>[0m [90m1443 |[0m   );
+  [90m     |[0m [31m[1m^^^^[0m
+[31m[1m>[0m [90m1444 |[0m }
+  [90m     |[0m [31m[1m^[0m
+  [90m1445 |[0m
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:802:7
+the name `medalConfig` is defined multiple times
+  [90m800 |[0m ];
+  [90m801 |[0m
+[31m[1m>[0m [90m802 |[0m [36mconst[0m medalConfig: [33mRecord[0m<string, { bg: string; text: string; label: ...
+  [90m    |[0m       [31m[1m^^^^^^^^^^^[0m
+  [90m803 |[0m   {
+  [90m804 |[0m     gold: { bg: [32m"medal-gold-bg"[0m, text: [32m"medal-gold-text"[0m, label: [32m"Ema..[0m.
+  [90m805 |[0m     silver: {
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+./app/Profile_Basket/page.tsx:725:7
+the name `scheduleData` is defined multiple times
+  [90m723 |[0m }
+  [90m724 |[0m
+[31m[1m>[0m [90m725 |[0m [36mconst[0m scheduleData = [
+  [90m    |[0m       [31m[1m^^^^^^^^^^^^[0m
+  [90m726 |[0m   {
+  [90m727 |[0m     day: [32m"Senin"[0m,
+  [90m728 |[0m     time: [32m"15.00 - 17.00"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/Profile_Basket/page.tsx [Client Component Browser]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/Profile_Basket/page.tsx [Client Component SSR]
+    ./app/Profile_Basket/page.tsx [Server Component]
+
+
+    at <unknown> (./app/Profile_Basket/page.tsx:948:25)
+    at <unknown> (./app/Profile_Basket/page.tsx:824:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:837:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:869:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:900:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:885:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:853:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:923:10)
+    at <unknown> (./app/Profile_Basket/page.tsx:769:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:752:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:948:1)
+    at <unknown> (./app/Profile_Basket/page.tsx:802:7)
+    at <unknown> (./app/Profile_Basket/page.tsx:725:7)
