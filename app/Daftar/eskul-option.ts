@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 export interface EskulOption {
   id_eskul: number;

@@ -27,15 +27,24 @@ function isDashboardRoute(pathname: string) {
   );
 }
 
+function hasProfileFooter(pathname: string) {
+  return (
+    pathname !== "/Profile_eskul" &&
+    pathname !== "/Profile_Basket" &&
+    pathname.startsWith("/Profile_")
+  );
+}
+
 export function RootLayoutClient({ children }: RootLayoutClientProps) {
   const pathname = usePathname();
   const hidePublicChrome = isDashboardRoute(pathname);
+  const showGlobalFooter = !hidePublicChrome && !hasProfileFooter(pathname);
 
   return (
     <>
       {!hidePublicChrome && <Navbar />}
       {children}
-      {!hidePublicChrome && <Footer />}
+      {showGlobalFooter && <Footer />}
     </>
   );
 }

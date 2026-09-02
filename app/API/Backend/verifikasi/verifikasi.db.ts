@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 // Pastikan import internal ini juga uppercase
 import { sendNotifikasi } from "@/app/API/Backend/notifikasi/db";
 

@@ -201,6 +201,7 @@ export default function HomePage() {
           {/* Left */}
           <div>
             <div className="hero-badge fade-in fade-in-1">
+              <IconStar />
               Ekstrakurikuler Unggulan
             </div>
             <h1 className="hero-title fade-in fade-in-2">

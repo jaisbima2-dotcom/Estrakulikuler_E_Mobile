@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 const supabase = supabaseAdmin; // Use centralized admin client with service role key
 

@@ -4,19 +4,61 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getKartuStats, deleteKartu, type KartuAnggota, type KartuStats } from "./action";
+import {
+  getKartuStats,
+  deleteKartu,
+  type KartuAnggota,
+  type KartuStats,
+} from "./action";
 import { getKartuDataAction } from "./action-rbac";
+import { logoutAction } from "@/app/Login/logout";
 
 /* ─── TYPES ─────────────────────────────────────────────────────────── */
 
 // Color palette for cards (cycle through colors)
 const colors = [
-  { color: "#ef4444", bg: "#fef2f2", avatarBg: "#fecaca", avatarColor: "#dc2626", stripColor: "#ef4444" },
-  { color: "#3b82f6", bg: "#eff6ff", avatarBg: "#bfdbfe", avatarColor: "#1d4ed8", stripColor: "#3b82f6" },
-  { color: "#10b981", bg: "#ecfdf5", avatarBg: "#a7f3d0", avatarColor: "#047857", stripColor: "#10b981" },
-  { color: "#f97316", bg: "#fff7ed", avatarBg: "#fed7aa", avatarColor: "#c2410c", stripColor: "#f97316" },
-  { color: "#06b6d4", bg: "#ecfeff", avatarBg: "#a5f3fc", avatarColor: "#0e7490", stripColor: "#06b6d4" },
-  { color: "#22c55e", bg: "#f0fdf4", avatarBg: "#bbf7d0", avatarColor: "#15803d", stripColor: "#22c55e" },
+  {
+    color: "#ef4444",
+    bg: "#fef2f2",
+    avatarBg: "#fecaca",
+    avatarColor: "#dc2626",
+    stripColor: "#ef4444",
+  },
+  {
+    color: "#3b82f6",
+    bg: "#eff6ff",
+    avatarBg: "#bfdbfe",
+    avatarColor: "#1d4ed8",
+    stripColor: "#3b82f6",
+  },
+  {
+    color: "#10b981",
+    bg: "#ecfdf5",
+    avatarBg: "#a7f3d0",
+    avatarColor: "#047857",
+    stripColor: "#10b981",
+  },
+  {
+    color: "#f97316",
+    bg: "#fff7ed",
+    avatarBg: "#fed7aa",
+    avatarColor: "#c2410c",
+    stripColor: "#f97316",
+  },
+  {
+    color: "#06b6d4",
+    bg: "#ecfeff",
+    avatarBg: "#a5f3fc",
+    avatarColor: "#0e7490",
+    stripColor: "#06b6d4",
+  },
+  {
+    color: "#22c55e",
+    bg: "#f0fdf4",
+    avatarBg: "#bbf7d0",
+    avatarColor: "#15803d",
+    stripColor: "#22c55e",
+  },
 ];
 
 function getInitials(name: string): string {
@@ -36,7 +78,11 @@ function formatDate(dateStr: string | null): string {
   if (!dateStr) return "-";
   try {
     const date = new Date(dateStr);
-    return date.toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   } catch {
     return "-";
   }
@@ -189,7 +235,10 @@ async function downloadKartuPDF(kartu: KartuAnggota, index: number) {
 
     // Use html2canvas if available
     const html2canvas = (await import("html2canvas")).default;
-    const canvas = await html2canvas(cardElement, { scale: 2, backgroundColor: "#ffffff" });
+    const canvas = await html2canvas(cardElement, {
+      scale: 2,
+      backgroundColor: "#ffffff",
+    });
     const image = canvas.toDataURL("image/png");
 
     // Use jsPDF if available
@@ -222,11 +271,63 @@ async function downloadKartuPDF(kartu: KartuAnggota, index: number) {
 export default function AnggotaPage() {
   const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [kartuList, setKartuList] = useState<KartuAnggota[]>([]);
   const [stats, setStats] = useState<KartuStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  // Handle logout with atomic cleanup
+  const handleLogout = async (e: React.MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+
+    if (isLoggingOut) return; // Prevent double-click
+
+    setIsLoggingOut(true);
+    setDropdownOpen(false);
+    console.log("[Generate_kartu] 🔐 Initiating logout...");
+
+    try {
+      console.log(
+        "[Generate_kartu] 🗑️ Clearing localStorage and sessionStorage...",
+      );
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        console.log("[Generate_kartu] ✅ Client storage cleared");
+      } catch (storageErr) {
+        console.warn(
+          "[Generate_kartu] ⚠️ Storage clear error (non-fatal):",
+          storageErr,
+        );
+      }
+
+      console.log("[Generate_kartu] 📡 Calling logout server action...");
+      const result = await logoutAction();
+
+      if (result.success) {
+        console.log("[Generate_kartu] ✅ Server logout successful");
+      } else {
+        console.error(
+          "[Generate_kartu] ⚠️ Server logout returned error:",
+          result.error,
+        );
+      }
+
+      console.log(
+        "[Generate_kartu] ⏳ Waiting 300ms for server to process cookie deletion...",
+      );
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      console.log("[Generate_kartu] 🔄 Performing hard redirect to /Login");
+      window.location.href = "/Login?logout=success";
+    } catch (err) {
+      console.error("[Generate_kartu] ❌ Logout error:", err);
+      console.log("[Generate_kartu] 🔄 Fallback: Hard redirect to /Login");
+      window.location.href = "/Login?logout=failed";
+    }
+  };
 
   // Load data on mount
   useEffect(() => {
@@ -237,7 +338,7 @@ export default function AnggotaPage() {
     try {
       setLoading(true);
       setError(null);
-      
+
       console.log("[Generate_kartu] 📥 Starting data load...");
 
       // Call RBAC server action - server reads cookies automatically
@@ -245,12 +346,17 @@ export default function AnggotaPage() {
       const statsResult = await getKartuStats();
 
       if (kartuResult.error) {
-        console.error("[Generate_kartu] ❌ Error loading kartu:", kartuResult.error);
+        console.error(
+          "[Generate_kartu] ❌ Error loading kartu:",
+          kartuResult.error,
+        );
         setError(kartuResult.error);
         setKartuList([]);
       } else {
-        console.log(`[Generate_kartu] ✅ Loaded ${kartuResult.data?.length || 0} kartu`);
-        
+        console.log(
+          `[Generate_kartu] ✅ Loaded ${kartuResult.data?.length || 0} kartu`,
+        );
+
         // Validate all kartu have required fields
         const validatedKartu = (kartuResult.data || []).map((k: any) => ({
           ...k,
@@ -260,7 +366,7 @@ export default function AnggotaPage() {
           nama_eskul: k.nama_eskul || "Tidak ada eskul",
           id_anggota: k.id_anggota || null,
         }));
-        
+
         setKartuList(validatedKartu);
       }
 
@@ -300,25 +406,31 @@ export default function AnggotaPage() {
     }
 
     const confirmDownload = window.confirm(
-      `Unduh ${kartuList.length} kartu? Ini akan membuka beberapa tab browser untuk setiap kartu.`
+      `Unduh ${kartuList.length} kartu? Ini akan membuka beberapa tab browser untuk setiap kartu.`,
     );
     if (!confirmDownload) return;
 
     try {
-      console.log("[handleDownloadAll] Starting bulk download for", kartuList.length, "kartu");
-      
+      console.log(
+        "[handleDownloadAll] Starting bulk download for",
+        kartuList.length,
+        "kartu",
+      );
+
       // Download each kartu with a small delay to prevent browser blocking
       for (let i = 0; i < kartuList.length; i++) {
         const kartu = kartuList[i];
         // Add delay between downloads (500ms) to prevent browser blocking
         if (i > 0) {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise((resolve) => setTimeout(resolve, 500));
         }
         await downloadKartuPDF(kartu, i);
       }
 
       console.log("[handleDownloadAll] ✅ Bulk download completed");
-      alert(`✅ Berhasil mengunduh ${kartuList.length} kartu. Periksa folder downloads Anda.`);
+      alert(
+        `✅ Berhasil mengunduh ${kartuList.length} kartu. Periksa folder downloads Anda.`,
+      );
     } catch (error) {
       console.error("[handleDownloadAll] Error:", error);
       alert("❌ Terjadi kesalahan saat mengunduh kartu");
@@ -346,22 +458,17 @@ export default function AnggotaPage() {
 
             {dropdownOpen && (
               <div className="dropdown">
-                <p>👤 View Profile</p>
-                <p>✉️ Messages</p>
+                <p>View Profile</p>
+                <p>Messages</p>
                 <p
                   className="logout"
-                  onClick={async () => {
-                    console.log("[Generate_kartu] Logout clicked");
-                    try {
-                      const { logoutAction } = await import("@/app/Login/logout");
-                      await logoutAction();
-                    } catch (err) {
-                      console.error("[Generate_kartu] Logout error:", err);
-                      window.location.href = "/";
-                    }
+                  onClick={handleLogout}
+                  style={{
+                    cursor: isLoggingOut ? "not-allowed" : "pointer",
+                    opacity: isLoggingOut ? 0.6 : 1,
                   }}
                 >
-                  ↩️ Logout
+                  ↩ {isLoggingOut ? "Logging out..." : "Logout"}
                 </p>
               </div>
             )}
@@ -374,22 +481,40 @@ export default function AnggotaPage() {
         <div className="sidebar-section">
           <p className="sidebar-section-title">MENU UTAMA</p>
           <nav className="sidebar-menu">
-            <Link href="/Dashboard_pembina" className={pathname === "/Dashboard_pembina" ? "active" : ""}>
+            <Link
+              href="/Dashboard_pengawas"
+              className={pathname === "/Dashboard_pengawas" ? "active" : ""}
+            >
               Dashboard
             </Link>
-            <Link href="/Crud_profile" className={pathname === "/Crud_profile" ? "active" : ""}>
+            <Link
+              href="/Crud_profile"
+              className={pathname === "/Crud_profile" ? "active" : ""}
+            >
               Profile
             </Link>
-            <Link href="/Laporan_absensi" className={pathname === "/Laporan_absensi" ? "active" : ""}>
+            <Link
+              href="/Laporan_absensi"
+              className={pathname === "/Laporan_absensi" ? "active" : ""}
+            >
               Laporan
             </Link>
-            <Link href="/Generate_qr" className={pathname === "/Generate_qr" ? "active" : ""}>
+            <Link
+              href="/Generate_qr"
+              className={pathname === "/Generate_qr" ? "active" : ""}
+            >
               Generator QR Code
             </Link>
-            <Link href="/Verifikasi" className={pathname === "/Verifikasi" ? "active" : ""}>
+            <Link
+              href="/Verifikasi"
+              className={pathname === "/Verifikasi" ? "active" : ""}
+            >
               Verifikasi Data Pendaftar
             </Link>
-            <Link href="/Generate_kartu" className={pathname === "/Generate_kartu" ? "active" : ""}>
+            <Link
+              href="/Generate_kartu"
+              className={pathname === "/Generate_kartu" ? "active" : ""}
+            >
               Kartu Identitas
             </Link>
           </nav>
@@ -409,7 +534,10 @@ export default function AnggotaPage() {
                   <span className="breadcrumb-sep">›</span>
                   <span className="breadcrumb-active">Kartu Keanggotaan</span>
                 </div>
-                <h1 className="font-extrabold text-gray-900 mt-1" style={{ fontSize: 22, letterSpacing: "-0.5px" }}>
+                <h1
+                  className="font-extrabold text-gray-900 mt-1"
+                  style={{ fontSize: 22, letterSpacing: "-0.5px" }}
+                >
                   Kartu Keanggotaan Ekskul
                 </h1>
                 <p className="text-sm text-gray-400 mt-1 font-medium">
@@ -418,7 +546,11 @@ export default function AnggotaPage() {
               </div>
 
               <div className="kartu-header-actions">
-                <button className="btn-outline" onClick={handleDownloadAll} disabled={loading || kartuList.length === 0}>
+                <button
+                  className="btn-outline"
+                  onClick={handleDownloadAll}
+                  disabled={loading || kartuList.length === 0}
+                >
                   ⬇ Unduh Semua
                 </button>
                 <button className="btn-primary">+ Tambah Anggota</button>
@@ -426,17 +558,26 @@ export default function AnggotaPage() {
             </div>
 
             <div className="flex flex-wrap gap-3 mb-5">
-              <span className="summary-badge" style={{ background: "#eef2ff", color: "#4f46e5" }}>
+              <span
+                className="summary-badge"
+                style={{ background: "#eef2ff", color: "#4f46e5" }}
+              >
                 <span style={{ fontSize: 16 }}>🪪</span>
                 Total Kartu
                 <strong>{stats?.total_kartu ?? 0}</strong>
               </span>
-              <span className="summary-badge" style={{ background: "#dcfce7", color: "#15803d" }}>
+              <span
+                className="summary-badge"
+                style={{ background: "#dcfce7", color: "#15803d" }}
+              >
                 <span style={{ fontSize: 14 }}>✅</span>
                 Aktif
                 <strong>{stats?.total_aktif ?? 0}</strong>
               </span>
-              <span className="summary-badge" style={{ background: "#fff7ed", color: "#c2410c" }}>
+              <span
+                className="summary-badge"
+                style={{ background: "#fff7ed", color: "#c2410c" }}
+              >
                 <span style={{ fontSize: 14 }}>⏳</span>
                 Tidak Aktif
                 <strong>{stats?.total_nonaktif ?? 0}</strong>
@@ -451,7 +592,9 @@ export default function AnggotaPage() {
                 className="search-input"
                 disabled={loading}
               />
-              <button className="filter-btn" disabled={loading}>⚙ Filter</button>
+              <button className="filter-btn" disabled={loading}>
+                ⚙ Filter
+              </button>
               <div className="view-toggle">
                 <button
                   className={`view-toggle-btn ${viewMode === "grid" ? "active" : ""}`}
@@ -472,7 +615,9 @@ export default function AnggotaPage() {
               <div className="kartu-state-card kartu-state-card--loading">
                 <div className="kartu-state-icon">⏳</div>
                 <div className="kartu-state-title">Memuat data kartu...</div>
-                <div className="kartu-state-desc">Sedang mengambil data dari database</div>
+                <div className="kartu-state-desc">
+                  Sedang mengambil data dari database
+                </div>
               </div>
             )}
 
@@ -484,7 +629,10 @@ export default function AnggotaPage() {
                   <button onClick={loadData} className="btn-outline">
                     🔄 Coba Lagi
                   </button>
-                  <button onClick={() => window.location.reload()} className="btn-primary">
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="btn-primary"
+                  >
                     🔃 Refresh Halaman
                   </button>
                 </div>
@@ -494,8 +642,12 @@ export default function AnggotaPage() {
             {!loading && !error && kartuList.length === 0 && (
               <div className="kartu-state-card kartu-state-card--empty">
                 <div className="kartu-state-icon">🪪</div>
-                <div className="kartu-state-title">Belum ada anggota yang terdaftar di eskul ini</div>
-                <div className="kartu-state-desc">Lakukan verifikasi anggota untuk menampilkan kartu identitas</div>
+                <div className="kartu-state-title">
+                  Belum ada anggota yang terdaftar di eskul ini
+                </div>
+                <div className="kartu-state-desc">
+                  Lakukan verifikasi anggota untuk menampilkan kartu identitas
+                </div>
               </div>
             )}
 
@@ -544,14 +696,23 @@ export default function AnggotaPage() {
                             >
                               {getInitials(kartu.nama)}
                             </div>
-                            <div className="accent-line" style={{ background: colorScheme.stripColor }} />
+                            <div
+                              className="accent-line"
+                              style={{ background: colorScheme.stripColor }}
+                            />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="card-label">NAMA</div>
-                            <div className="card-value truncate" title={kartu.nama}>
+                            <div
+                              className="card-value truncate"
+                              title={kartu.nama}
+                            >
                               {kartu.nama}
                             </div>
-                            <div className="flex flex-wrap mt-3" style={{ gap: "var(--sp-md)" }}>
+                            <div
+                              className="flex flex-wrap mt-3"
+                              style={{ gap: "var(--sp-md)" }}
+                            >
                               <div>
                                 <div className="card-label">KELAS</div>
                                 <div className="font-semibold text-gray-700">
@@ -560,13 +721,22 @@ export default function AnggotaPage() {
                               </div>
                               <div>
                                 <div className="card-label">EKSKUL</div>
-                                <span className="ekskul-badge" style={{ background: colorScheme.bg, color: colorScheme.color }}>
+                                <span
+                                  className="ekskul-badge"
+                                  style={{
+                                    background: colorScheme.bg,
+                                    color: colorScheme.color,
+                                  }}
+                                >
                                   {kartu.nama_eskul}
                                 </span>
                               </div>
                               <div>
                                 <div className="card-label">NISN</div>
-                                <div className="id-mono" style={{ color: colorScheme.color }}>
+                                <div
+                                  className="id-mono"
+                                  style={{ color: colorScheme.color }}
+                                >
                                   {kartu.nis}
                                 </div>
                               </div>
@@ -582,7 +752,10 @@ export default function AnggotaPage() {
                               {kartu.nama}
                             </div>
                           </div>
-                          <div className="flex flex-wrap" style={{ gap: "var(--sp-md)" }}>
+                          <div
+                            className="flex flex-wrap"
+                            style={{ gap: "var(--sp-md)" }}
+                          >
                             <div>
                               <div className="card-label">KELAS</div>
                               <div className="font-semibold text-gray-700">
@@ -591,19 +764,31 @@ export default function AnggotaPage() {
                             </div>
                             <div>
                               <div className="card-label">EKSKUL</div>
-                              <span className="ekskul-badge" style={{ background: colorScheme.bg, color: colorScheme.color }}>
+                              <span
+                                className="ekskul-badge"
+                                style={{
+                                  background: colorScheme.bg,
+                                  color: colorScheme.color,
+                                }}
+                              >
                                 {kartu.nama_eskul}
                               </span>
                             </div>
                             <div>
                               <div className="card-label">NISN</div>
-                              <div className="id-mono" style={{ color: colorScheme.color }}>
+                              <div
+                                className="id-mono"
+                                style={{ color: colorScheme.color }}
+                              >
                                 {kartu.nis}
                               </div>
                             </div>
                             <div>
                               <div className="card-label">ID ANGGOTA</div>
-                              <div className="id-mono" style={{ color: colorScheme.color }}>
+                              <div
+                                className="id-mono"
+                                style={{ color: colorScheme.color }}
+                              >
                                 {kartu.id_anggota}
                               </div>
                             </div>
@@ -623,20 +808,35 @@ export default function AnggotaPage() {
                           {viewMode === "grid" && (
                             <>
                               <div className="card-label">ID ANGGOTA</div>
-                              <div className="id-mono" style={{ color: colorScheme.color }}>
+                              <div
+                                className="id-mono"
+                                style={{ color: colorScheme.color }}
+                              >
                                 {kartu.id_anggota}
                               </div>
                             </>
                           )}
                         </div>
                         <div className="card-footer-actions">
-                          <button className="icon-btn" title="Print" onClick={() => printKartu(kartu, index)}>
+                          <button
+                            className="icon-btn"
+                            title="Print"
+                            onClick={() => printKartu(kartu, index)}
+                          >
                             🖨
                           </button>
-                          <button className="icon-btn" title="Download PDF" onClick={() => downloadKartuPDF(kartu, index)}>
+                          <button
+                            className="icon-btn"
+                            title="Download PDF"
+                            onClick={() => downloadKartuPDF(kartu, index)}
+                          >
                             ⬇
                           </button>
-                          <button className="icon-btn" title="Hapus" onClick={() => handleDeleteKartu(kartu.id_anggota)}>
+                          <button
+                            className="icon-btn"
+                            title="Hapus"
+                            onClick={() => handleDeleteKartu(kartu.id_anggota)}
+                          >
                             🗑
                           </button>
                         </div>

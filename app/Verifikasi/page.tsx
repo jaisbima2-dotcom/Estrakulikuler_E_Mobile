@@ -15,19 +15,74 @@ import {
 import { PendaftaranRow } from "@/app/API/Backend/verifikasi/verifikasi.db";
 import { verifikasiEskulAction } from "./action";
 import { getVerifikasiDataAction } from "./action-rbac";
+import { logoutAction } from "@/app/Login/logout";
 import "./style.css";
 
 export default function VerifikasiPage() {
   const pathname = usePathname();
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"pending" | "diterima" | "ditolak" | "semua">("pending");
+  const [statusFilter, setStatusFilter] = useState<
+    "pending" | "diterima" | "ditolak" | "semua"
+  >("pending");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Data & Loading states
   const [data, setData] = useState<PendaftaranRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [verifyingId, setVerifyingId] = useState<number | null>(null);
+
+  // Handle logout with atomic cleanup
+  const handleLogout = async (e: React.MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+
+    if (isLoggingOut) return; // Prevent double-click
+
+    setIsLoggingOut(true);
+    setDropdownOpen(false);
+    console.log("[Verifikasi] 🔐 Initiating logout...");
+
+    try {
+      console.log(
+        "[Verifikasi] 🗑️ Clearing localStorage and sessionStorage...",
+      );
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        console.log("[Verifikasi] ✅ Client storage cleared");
+      } catch (storageErr) {
+        console.warn(
+          "[Verifikasi] ⚠️ Storage clear error (non-fatal):",
+          storageErr,
+        );
+      }
+
+      console.log("[Verifikasi] 📡 Calling logout server action...");
+      const result = await logoutAction();
+
+      if (result.success) {
+        console.log("[Verifikasi] ✅ Server logout successful");
+      } else {
+        console.error(
+          "[Verifikasi] ⚠️ Server logout returned error:",
+          result.error,
+        );
+      }
+
+      console.log(
+        "[Verifikasi] ⏳ Waiting 300ms for server to process cookie deletion...",
+      );
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      console.log("[Verifikasi] 🔄 Performing hard redirect to /Login");
+      window.location.href = "/Login?logout=success";
+    } catch (err) {
+      console.error("[Verifikasi] ❌ Logout error:", err);
+      console.log("[Verifikasi] 🔄 Fallback: Hard redirect to /Login");
+      window.location.href = "/Login?logout=failed";
+    }
+  };
 
   // Fetch data from database with RBAC
   // Server action reads session from server-side cookies, no need for client params
@@ -36,11 +91,16 @@ export default function VerifikasiPage() {
       setLoading(true);
       setError("");
 
-      const filter = statusFilter === "semua" ? undefined : (statusFilter as any);
-      
+      const filter =
+        statusFilter === "semua" ? undefined : (statusFilter as any);
+
       // Use RBAC server action - admin sees all, coach sees only their eskul
       // No need to pass userId/role - server action reads from server-side cookies
-      const { data: result, error: err } = await getVerifikasiDataAction(undefined, undefined, filter);
+      const { data: result, error: err } = await getVerifikasiDataAction(
+        undefined,
+        undefined,
+        filter,
+      );
 
       if (err) {
         setError(err);
@@ -48,7 +108,11 @@ export default function VerifikasiPage() {
         return;
       }
 
-      console.log("[VERIFIKASI PAGE] Data fetched successfully:", result?.length || 0, "records");
+      console.log(
+        "[VERIFIKASI PAGE] Data fetched successfully:",
+        result?.length || 0,
+        "records",
+      );
       setData((result as any[]) || []);
     } catch (err) {
       console.error("[VERIFIKASI PAGE] Error fetching data:", err);
@@ -68,7 +132,7 @@ export default function VerifikasiPage() {
     console.log("[VERIFIKASI PAGE] handleVerify called");
 
     // Server action will validate session from server-side cookies
-    
+
     if (!confirm("Yakin ingin menerima pendaftaran ini?")) {
       return;
     }
@@ -82,7 +146,7 @@ export default function VerifikasiPage() {
       const result = await verifikasiEskulAction(
         id_pendaftar,
         "diterima",
-        0  // Not used - server uses session userId
+        0, // Not used - server uses session userId
       );
 
       if (result.error) {
@@ -104,7 +168,7 @@ export default function VerifikasiPage() {
     console.log("[VERIFIKASI PAGE] handleReject called");
 
     // Server action will validate session from server-side cookies
-    
+
     if (!confirm("Yakin ingin menolak pendaftaran ini?")) {
       return;
     }
@@ -118,7 +182,7 @@ export default function VerifikasiPage() {
       const result = await verifikasiEskulAction(
         id_pendaftar,
         "ditolak",
-        0  // Not used - server uses session userId
+        0, // Not used - server uses session userId
       );
 
       if (result.error) {
@@ -198,22 +262,17 @@ export default function VerifikasiPage() {
 
             {dropdownOpen && (
               <div className="dropdown">
-                <p>👤 View Profile</p>
-                <p>✉️ Messages</p>
+                <p>View Profile</p>
+                <p>Messages</p>
                 <p
                   className="logout"
-                  onClick={async () => {
-                    console.log("[Verifikasi] Logout clicked");
-                    try {
-                      const { logoutAction } = await import("@/app/Login/logout");
-                      await logoutAction();
-                    } catch (err) {
-                      console.error("[Verifikasi] Logout error:", err);
-                      window.location.href = "/";
-                    }
+                  onClick={handleLogout}
+                  style={{
+                    cursor: isLoggingOut ? "not-allowed" : "pointer",
+                    opacity: isLoggingOut ? 0.6 : 1,
                   }}
                 >
-                  ↩️ Logout
+                  ↩ {isLoggingOut ? "Logging out..." : "Logout"}
                 </p>
               </div>
             )}
@@ -226,16 +285,49 @@ export default function VerifikasiPage() {
         <div className="sidebar-section">
           <p className="sidebar-section-title">MENU UTAMA</p>
           <nav className="sidebar-menu">
-            <Link href="/Dashboard_pembina" className={pathname === "/Dashboard_pembina" ? "active" : ""}>Dashboard</Link>
-            <Link href="/Crud_profile" className={pathname === "/Crud_profile" ? "active" : ""}> Profile</Link>
-            <Link href="/Laporan_absensi" className={pathname === "/Laporan_absensi" ? "active" : ""}> Laporan</Link>
-             <Link href="/Generate_qr" className={pathname === "/Generate_qr" ? "active" : ""}> Generator QR Code</Link>
-            <Link href="/Verifikasi" className={pathname === "/Verifikasi" ? "active" : ""}> Verifikasi Data Pendaftar</Link>
-            <Link href="/Generate_kartu" className={pathname === "/Generate_kartu" ? "active" : ""}> Kartu Identitas</Link>
+            <Link
+              href="/Dashboard_pengawas"
+              className={pathname === "/Dashboard_pengawas" ? "active" : ""}
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/Crud_profile"
+              className={pathname === "/Crud_profile" ? "active" : ""}
+            >
+              {" "}
+              Profile
+            </Link>
+            <Link
+              href="/Laporan_absensi"
+              className={pathname === "/Laporan_absensi" ? "active" : ""}
+            >
+              {" "}
+              Laporan
+            </Link>
+            <Link
+              href="/Generate_qr"
+              className={pathname === "/Generate_qr" ? "active" : ""}
+            >
+              {" "}
+              Generator QR Code
+            </Link>
+            <Link
+              href="/Verifikasi"
+              className={pathname === "/Verifikasi" ? "active" : ""}
+            >
+              {" "}
+              Verifikasi Data Pendaftar
+            </Link>
+            <Link
+              href="/Generate_kartu"
+              className={pathname === "/Generate_kartu" ? "active" : ""}
+            >
+              {" "}
+              Kartu Identitas
+            </Link>
           </nav>
         </div>
-
-      
       </aside>
 
       {/* Main wrapper */}
@@ -269,7 +361,11 @@ export default function VerifikasiPage() {
                   value={statusFilter}
                   onChange={(e) =>
                     setStatusFilter(
-                      e.target.value as "pending" | "diterima" | "ditolak" | "semua"
+                      e.target.value as
+                        | "pending"
+                        | "diterima"
+                        | "ditolak"
+                        | "semua",
                     )
                   }
                 >
@@ -309,7 +405,10 @@ export default function VerifikasiPage() {
                 padding: "40px",
               }}
             >
-              <Loader2 size={32} style={{ animation: "spin 1s linear infinite" }} />
+              <Loader2
+                size={32}
+                style={{ animation: "spin 1s linear infinite" }}
+              />
               <span style={{ marginLeft: "12px" }}>Memuat data...</span>
             </div>
           )}
@@ -363,7 +462,7 @@ export default function VerifikasiPage() {
                             <span
                               style={{
                                 backgroundColor: getStatusColor(
-                                  item.status_daftar
+                                  item.status_daftar,
                                 ),
                                 color: "white",
                                 padding: "6px 12px",
@@ -377,7 +476,7 @@ export default function VerifikasiPage() {
                           </td>
                           <td className="cell-date">
                             {new Date(item.created_at).toLocaleDateString(
-                              "id-ID"
+                              "id-ID",
                             )}
                           </td>
                           <td className="cell-actions">
@@ -418,8 +517,7 @@ export default function VerifikasiPage() {
                                     <Loader2
                                       size={14}
                                       style={{
-                                        animation:
-                                          "spin 1s linear infinite",
+                                        animation: "spin 1s linear infinite",
                                       }}
                                     />
                                   ) : (
@@ -428,7 +526,9 @@ export default function VerifikasiPage() {
                                   Terima
                                 </button>
                                 <button
-                                  onClick={() => handleReject(item.id_pendaftar)}
+                                  onClick={() =>
+                                    handleReject(item.id_pendaftar)
+                                  }
                                   disabled={verifyingId === item.id_pendaftar}
                                   style={{
                                     backgroundColor: "#F44336",
@@ -454,8 +554,7 @@ export default function VerifikasiPage() {
                                     <Loader2
                                       size={14}
                                       style={{
-                                        animation:
-                                          "spin 1s linear infinite",
+                                        animation: "spin 1s linear infinite",
                                       }}
                                     />
                                   ) : (

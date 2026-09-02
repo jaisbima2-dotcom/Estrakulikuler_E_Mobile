@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 export async function loginUser(username: string, password: string) {
   console.log("MASUK DB TS - Username:", username, "Password:", password);

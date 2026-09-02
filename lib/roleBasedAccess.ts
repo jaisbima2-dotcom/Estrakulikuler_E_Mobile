@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 /**
  * Utility functions untuk role-based filtering

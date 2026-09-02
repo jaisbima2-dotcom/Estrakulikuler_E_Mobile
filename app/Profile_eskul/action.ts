@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 

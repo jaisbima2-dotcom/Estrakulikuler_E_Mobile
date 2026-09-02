@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 /**
  * Get dashboard statistics: total eskul, active students, attendance rate

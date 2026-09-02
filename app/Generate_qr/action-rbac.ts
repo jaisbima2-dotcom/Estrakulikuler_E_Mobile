@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { generateQRToken, generateQRTokenByPengurus } from "@/app/API/Backend/generate-qr/db";
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 
 interface GenerateQRResponse {

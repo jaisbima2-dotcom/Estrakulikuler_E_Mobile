@@ -4,7 +4,7 @@
  * Verifies database and backend connectivity before making requests
  */
 
-import { supabaseClient } from "@/library/SupabaseClient";
+import { supabaseClient } from "@/lib/supabaseclient";
 
 export interface ConnectionStatus {
   database: boolean;

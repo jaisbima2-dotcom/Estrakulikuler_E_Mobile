@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PUBLIC REGISTRATION - Auto-create account & register for ekstrakurikuler

@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 /**
  * POST /api/Backend/Absensi

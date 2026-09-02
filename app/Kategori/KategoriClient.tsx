@@ -13,9 +13,9 @@ interface EskulItem {
   hari_latihan: string;
   jam_latihan: string;
   deskripsi: string;
-  image_url?: string | null;
-  id_pengurus?: number | null; // <--- SEKARANG MENGGUNAKAN ID_PENGURUS
-  slug?: string;
+  image_url: string | null;
+  id_pengurus: number | null; // <--- SEKARANG MENGGUNAKAN ID_PENGURUS
+  slug: string;
 }
 
 export default function KategoriClient({
@@ -49,7 +49,7 @@ export default function KategoriClient({
           <div className="hero-inner">
             <div className="hero-copy">
               <h1 className="hero-title">Kategori Ekstrakurikuler</h1>
-              <p className="hero-sub">Jelajahi program ekstrakurikuler aktif di ExtraHub.</p>
+              <p className="hero-sub">Jelajahi program ekstrakurikuler aktif di Ekstrakurikuler E-Mobile.</p>
             </div>
             <div className="hero-card">
               <div className="hero-card-title">Temukan Ekskul Favorit</div>

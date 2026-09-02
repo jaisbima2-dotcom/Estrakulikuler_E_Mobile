@@ -7,31 +7,41 @@ import { motion } from "framer-motion";
 import { Users, Calendar } from "lucide-react";
 import { getEskulThumbnailPath, getDefaultImagePath } from "@/lib/imageUtils";
 
+// Type definition for Eskul
+interface Eskul {
+  id_eskul: number;
+  nama_eskul: string;
+  kategori: string;
+  hari_latihan: string;
+  jam_latihan: string;
+  deskripsi: string;
+  image_url: string | null;
+  id_pengurus: number | null;
+  slug: string;
+}
+
 // Helper: Map Eskul Name to Profile Path
 const getEskulProfilePath = (eskulName: string): string => {
   const nameMap: Record<string, string> = {
-    "Basket": "/Profile_Basket",
-    "Badminton": "/Profile_badminton",
-    "Voli": "/Profile_voli",
-    "Futsal": "/Profile_futsal",
-    "English Club": "/Profile_inggris",
-    "English": "/Profile_inggris",
-    "Inggris": "/Profile_inggris",
-    "Japanese Club": "/Profile_jepang",
-    "Japanese": "/Profile_jepang",
-    "Jepang": "/Profile_jepang",
-    "Paskibra": "/Profile_paskibra",
-    "PMR": "/Profile_pmr",
-    "Pramuka": "/Profile_pramuka",
-    "ROHIS": "/Profile_rohis",
-    "Rohani Islam": "/Profile_rohis",
-    "ROKRIS": "/Profile_rokris",
-    "Rokris": "/Profile_rokris",
-    "Tari": "/Profile_tari",
-    "Dance": "/Profile_tari",
+    Basket: "/Profile_Basket",
+    Badminton: "/Profile_badminton",
+    Voli: "/Profile_voli",
+    Futsal: "/Profile_futsal",
+    EnglishClub: "/Profile_inggris",
+    JapaneseClub: "/Profile_jepang",
+    Paskibra: "/Profile_paskibra",
+    PMR: "/Profile_pmr",
+    Pramuka: "/Profile_pramuka",
+    ROHIS: "/Profile_rohis",
+    Rokris: "/Profile_rokris",
+    Tari: "/Profile_tari",
+    Dance: "/Profile_tari",
   };
 
-  return nameMap[eskulName] || `/Profile_${eskulName.toLowerCase().replace(/\s+/g, "_")}`;
+  return (
+    nameMap[eskulName] ||
+    `/Profile_${eskulName.toLowerCase().replace(/\s+/g, "_")}`
+  );
 };
 
 export default function EskulCardUI({
@@ -40,7 +50,7 @@ export default function EskulCardUI({
   userRole,
   userId,
 }: {
-  eskul: any;
+  eskul: Eskul;
   index: number;
   userRole: string | null;
   userId: number | null;
@@ -49,8 +59,10 @@ export default function EskulCardUI({
 
   const imgSrc = eskul.image_url || getEskulThumbnailPath(eskul.nama_eskul);
 
-  // DIUBAH: Menggunakan id_pembina menyesuaikan database kamu
-  const canManage = userRole === "admin" || (userRole === "pembina" && userId === eskul.id_pembina);
+  // DIUBAH: Menggunakan id_pengurus menyesuaikan database kamu
+  const canManage =
+    userRole === "admin" ||
+    (userRole === "pembina" && userId === eskul.id_pengurus);
   const profilePath = getEskulProfilePath(eskul.nama_eskul);
 
   return (
@@ -92,8 +104,10 @@ export default function EskulCardUI({
             <div className="card-meta">
               <div className="meta-item">
                 <Users size={14} />
-                {/* DIUBAH: Cek id_pembina */}
-                <span className="text-white/90">{eskul.id_pembina ? "Pembina" : "Terbuka"}</span>
+                {/* DIUBAH: Cek id_pengurus */}
+                <span className="text-white/90">
+                  {eskul.id_pengurus ? "Pembina" : "Terbuka"}
+                </span>
               </div>
               <div className="meta-item">
                 <Calendar size={14} />
@@ -103,16 +117,23 @@ export default function EskulCardUI({
               </div>
             </div>
 
-            <p className="card-desc text-white/80">{(eskul.deskripsi || "").slice(0, 140)}</p>
+            <p className="card-desc text-white/80">
+              {(eskul.deskripsi || "").slice(0, 140)}
+            </p>
 
             <div className="card-actions">
-              <span className="btn btn-primary">
-                Lihat Detail
-              </span>
+              <span className="btn btn-primary">Lihat Detail</span>
 
               {canManage && (
-                <div className="manage-group" onClick={(e) => e.stopPropagation()}>
-                  <Link href={`/Crud_profile?edit=${eskul.id_eskul}`} className="btn btn-ghost" onClick={(e) => e.stopPropagation()}>
+                <div
+                  className="manage-group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Link
+                    href={`/Crud_profile?edit=${eskul.id_eskul}`}
+                    className="btn btn-ghost"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     Edit
                   </Link>
                 </div>

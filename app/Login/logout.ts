@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { supabaseClient } from "@/library/SupabaseClient";
+import { supabaseClient } from "@/lib/supabaseclient";
 
 export async function logoutAction() {
   try {

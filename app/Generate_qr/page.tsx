@@ -20,6 +20,7 @@ import {
   Copy,
 } from "lucide-react";
 import Link from "next/link";
+import { logoutAction } from "@/app/Login/logout";
 import "./style.css";
 
 /* ─── TYPES ─────────────────────────────────────────────────────────── */
@@ -329,7 +330,8 @@ const QrCell: FC<QrCellProps> = ({ qrImage, qrExpiredAt }) => {
             fontWeight: 500,
           }}
         >
-          ⏱ {new Date(qrExpiredAt).toLocaleTimeString("id-ID", {
+          ⏱{" "}
+          {new Date(qrExpiredAt).toLocaleTimeString("id-ID", {
             hour: "2-digit",
             minute: "2-digit",
           })}
@@ -777,6 +779,7 @@ export default function DashboardPage() {
   const pathname = usePathname();
   const [activePage, setActivePage] = useState<number>(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   /* User data */
@@ -790,6 +793,57 @@ export default function DashboardPage() {
 
   /* QR state map by id_eskul */
   const [qrStates, setQrStates] = useState<Record<number, RowQrState>>({});
+
+  // Handle logout with atomic cleanup
+  const handleLogout = async (e: React.MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+
+    if (isLoggingOut) return; // Prevent double-click
+
+    setIsLoggingOut(true);
+    setDropdownOpen(false);
+    console.log("[Generate_qr] 🔐 Initiating logout...");
+
+    try {
+      console.log(
+        "[Generate_qr] 🗑️ Clearing localStorage and sessionStorage...",
+      );
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        console.log("[Generate_qr] ✅ Client storage cleared");
+      } catch (storageErr) {
+        console.warn(
+          "[Generate_qr] ⚠️ Storage clear error (non-fatal):",
+          storageErr,
+        );
+      }
+
+      console.log("[Generate_qr] 📡 Calling logout server action...");
+      const result = await logoutAction();
+
+      if (result.success) {
+        console.log("[Generate_qr] ✅ Server logout successful");
+      } else {
+        console.error(
+          "[Generate_qr] ⚠️ Server logout returned error:",
+          result.error,
+        );
+      }
+
+      console.log(
+        "[Generate_qr] ⏳ Waiting 300ms for server to process cookie deletion...",
+      );
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      console.log("[Generate_qr] 🔄 Performing hard redirect to /Login");
+      window.location.href = "/Login?logout=success";
+    } catch (err) {
+      console.error("[Generate_qr] ❌ Logout error:", err);
+      console.log("[Generate_qr] 🔄 Fallback: Hard redirect to /Login");
+      window.location.href = "/Login?logout=failed";
+    }
+  };
 
   /* Fetch user info from cookies and load eskul list */
   useEffect(() => {
@@ -813,7 +867,7 @@ export default function DashboardPage() {
           setEskulList([]);
         } else {
           console.log(
-            `[useEffect] ✅ Loaded ${result.data?.length || 0} eskul`
+            `[useEffect] ✅ Loaded ${result.data?.length || 0} eskul`,
           );
           setEskulList(result.data || []);
           setErrorEskul(null);
@@ -860,7 +914,7 @@ export default function DashboardPage() {
     }, 3000);
   };
 
- /* Generate QR for a row */
+  /* Generate QR for a row */
   const generateQR = async (id_eskul: number): Promise<void> => {
     console.log("📱 Generating QR for id_eskul:", id_eskul);
     updateRowQrState(id_eskul, { loading: true, error: null });
@@ -908,7 +962,7 @@ export default function DashboardPage() {
     console.log("DELETE userId:", userId);
     console.log("DELETE role:", role);
     console.log("DELETE id_eskul:", id_eskul);
-    
+
     updateRowQrState(id_eskul, { loading: true, error: null });
 
     try {
@@ -924,7 +978,8 @@ export default function DashboardPage() {
       // Handle response
       // ────────────────────────────────────────────────────────────────
       if (result?.error) {
-        const errorMsg = result.error || result.message || "Gagal delete QR session.";
+        const errorMsg =
+          result.error || result.message || "Gagal delete QR session.";
         console.error("🗑️  [FRONTEND DELETE] Error:", errorMsg);
         throw new Error(errorMsg);
       }
@@ -993,22 +1048,17 @@ export default function DashboardPage() {
             </div>
             {dropdownOpen && (
               <div className="dropdown">
-                <p>👤 View Profile</p>
-                <p>✉️ Messages</p>
+                <p>View Profile</p>
+                <p>Messages</p>
                 <p
                   className="logout"
-                  onClick={async () => {
-                    console.log("[Generate_qr] Logout clicked");
-                    try {
-                      const { logoutAction } = await import("@/app/Login/logout");
-                      await logoutAction();
-                    } catch (err) {
-                      console.error("[Generate_qr] Logout error:", err);
-                      window.location.href = "/";
-                    }
+                  onClick={handleLogout}
+                  style={{
+                    cursor: isLoggingOut ? "not-allowed" : "pointer",
+                    opacity: isLoggingOut ? 0.6 : 1,
                   }}
                 >
-                  ↩️ Logout
+                  ↩ {isLoggingOut ? "Logging out..." : "Logout"}
                 </p>
               </div>
             )}
@@ -1021,14 +1071,42 @@ export default function DashboardPage() {
         <div className="sidebar-section">
           <p className="sidebar-section-title">MENU UTAMA</p>
           <nav className="sidebar-menu">
-            <Link href="/Dashboard_pembina" className={pathname === "/Dashboard_pembina" ? "active" : ""}>Dashboard</Link>
-            <Link href="/Crud_profile" className={pathname === "/Crud_profile" ? "active" : ""}>Profile</Link>
-            <Link href="/Laporan_absensi" className={pathname === "/Laporan_absensi" ? "active" : ""}>Laporan</Link>
-            <Link href="/Generate_qr" className={pathname === "/Generate_qr" ? "active" : ""}>
+            <Link
+              href="/Dashboard_pengawas"
+              className={pathname === "/Dashboard_pengawas" ? "active" : ""}
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/Crud_profile"
+              className={pathname === "/Crud_profile" ? "active" : ""}
+            >
+              Profile
+            </Link>
+            <Link
+              href="/Laporan_absensi"
+              className={pathname === "/Laporan_absensi" ? "active" : ""}
+            >
+              Laporan
+            </Link>
+            <Link
+              href="/Generate_qr"
+              className={pathname === "/Generate_qr" ? "active" : ""}
+            >
               Generator QR Code
             </Link>
-            <Link href="/Verifikasi" className={pathname === "/Verifikasi" ? "active" : ""}>Verifikasi Data Pendaftar</Link>
-            <Link href="/Generate_kartu" className={pathname === "/Generate_kartu" ? "active" : ""}>Kartu Identitas</Link>
+            <Link
+              href="/Verifikasi"
+              className={pathname === "/Verifikasi" ? "active" : ""}
+            >
+              Verifikasi Data Pendaftar
+            </Link>
+            <Link
+              href="/Generate_kartu"
+              className={pathname === "/Generate_kartu" ? "active" : ""}
+            >
+              Kartu Identitas
+            </Link>
           </nav>
         </div>
       </aside>
@@ -1180,212 +1258,239 @@ export default function DashboardPage() {
 
             {/* Table */}
             {!loadingEskul && eskulList.length > 0 && (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr className="table-header-row">
-                    <th style={{ textAlign: "left" }}>Nama Eskul</th>
-                    <th style={{ textAlign: "left" }}>Kategori</th>
-                    <th style={{ textAlign: "left" }}>Pembina</th>
-                    <th style={{ textAlign: "left" }}>Status</th>
-                    <th style={{ textAlign: "left" }}>QR Code</th>
-                    <th style={{ textAlign: "left" }}>Aksi</th>
-                  </tr>
-                </thead>
-<tbody>
-  {loadingEskul ? (
-    <tr>
-      <td colSpan={6} style={{ textAlign: "center", padding: "24px", color: "#64748b", fontSize: 13.5 }}>
-        ⏳ Memuat data eskul yang kamu ampu...
-      </td>
-    </tr>
-  ) : errorEskul ? (
-    <tr>
-      <td colSpan={6} style={{ textAlign: "center", padding: "24px", color: "#dc2626", fontSize: 13.5 }}>
-        ⚠️ {errorEskul}
-      </td>
-    </tr>
-  ) : eskulList.length === 0 ? (
-    <tr>
-      <td colSpan={6} style={{ textAlign: "center", padding: "24px", color: "#64748b", fontSize: 13.5 }}>
-        Kamu belum ditugaskan di eskul manapun. Silakan hubungi Admin Utama.
-      </td>
-    </tr>
-  ) : (
-    eskulList.map((eskul: EskulItem, index: number) => {
-      const rowQr = getRowQrState(eskul.id_eskul);
-      const initials = eskul.nama_eskul
-        .split(" ")
-        .slice(0, 2)
-        .map((w: string) => w[0].toUpperCase())
-        .join("");
-      const colors = [
-        { bg: "#dbeafe", color: "#2563eb" },
-        { bg: "#fce7f3", color: "#db2777" },
-        { bg: "#dcfce7", color: "#16a34a" },
-        { bg: "#fef3c7", color: "#d97706" },
-        { bg: "#f3e8ff", color: "#7c3aed" },
-        { bg: "#fee2e2", color: "#dc2626" },
-        { bg: "#fecdd3", color: "#be123c" },
-        { bg: "#e0e7ff", color: "#6366f1" },
-      ];
-      const color = colors[index % colors.length];
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr className="table-header-row">
+                      <th style={{ textAlign: "left" }}>Nama Eskul</th>
+                      <th style={{ textAlign: "left" }}>Kategori</th>
+                      <th style={{ textAlign: "left" }}>Pembina</th>
+                      <th style={{ textAlign: "left" }}>Status</th>
+                      <th style={{ textAlign: "left" }}>QR Code</th>
+                      <th style={{ textAlign: "left" }}>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loadingEskul ? (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          style={{
+                            textAlign: "center",
+                            padding: "24px",
+                            color: "#64748b",
+                            fontSize: 13.5,
+                          }}
+                        >
+                          ⏳ Memuat data eskul yang kamu ampu...
+                        </td>
+                      </tr>
+                    ) : errorEskul ? (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          style={{
+                            textAlign: "center",
+                            padding: "24px",
+                            color: "#dc2626",
+                            fontSize: 13.5,
+                          }}
+                        >
+                          ⚠️ {errorEskul}
+                        </td>
+                      </tr>
+                    ) : eskulList.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          style={{
+                            textAlign: "center",
+                            padding: "24px",
+                            color: "#64748b",
+                            fontSize: 13.5,
+                          }}
+                        >
+                          Kamu belum ditugaskan di eskul manapun. Silakan
+                          hubungi Admin Utama.
+                        </td>
+                      </tr>
+                    ) : (
+                      eskulList.map((eskul: EskulItem, index: number) => {
+                        const rowQr = getRowQrState(eskul.id_eskul);
+                        const initials = eskul.nama_eskul
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((w: string) => w[0].toUpperCase())
+                          .join("");
+                        const colors = [
+                          { bg: "#dbeafe", color: "#2563eb" },
+                          { bg: "#fce7f3", color: "#db2777" },
+                          { bg: "#dcfce7", color: "#16a34a" },
+                          { bg: "#fef3c7", color: "#d97706" },
+                          { bg: "#f3e8ff", color: "#7c3aed" },
+                          { bg: "#fee2e2", color: "#dc2626" },
+                          { bg: "#fecdd3", color: "#be123c" },
+                          { bg: "#e0e7ff", color: "#6366f1" },
+                        ];
+                        const color = colors[index % colors.length];
 
-      return (
-        <tr key={eskul.id_eskul} className="table-row">
-          {/* Nama Eskul */}
-          <td className="table-cell">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-              }}
-            >
-              <div
-                className="avatar"
-                style={{
-                  background: color.bg,
-                  color: color.color,
-                  fontSize: 12,
-                }}
-              >
-                {initials}
+                        return (
+                          <tr key={eskul.id_eskul} className="table-row">
+                            {/* Nama Eskul */}
+                            <td className="table-cell">
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 10,
+                                }}
+                              >
+                                <div
+                                  className="avatar"
+                                  style={{
+                                    background: color.bg,
+                                    color: color.color,
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  {initials}
+                                </div>
+                                <div>
+                                  <p
+                                    style={{
+                                      fontWeight: 700,
+                                      fontSize: 13.5,
+                                      color: "#0f172a",
+                                      margin: 0,
+                                    }}
+                                  >
+                                    {eskul.nama_eskul}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+
+                            {/* Kategori */}
+                            <td className="table-cell">
+                              <p
+                                style={{
+                                  fontWeight: 700,
+                                  fontSize: 13,
+                                  color: "#0f172a",
+                                  margin: 0,
+                                }}
+                              >
+                                {eskul.kategori}
+                              </p>
+                            </td>
+
+                            {/* Pembina */}
+                            <td className="table-cell">
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "#64748b",
+                                  margin: 0,
+                                }}
+                              >
+                                {eskul.pembina}
+                              </p>
+                            </td>
+
+                            {/* Status */}
+                            <td className="table-cell">
+                              <span className="badge badge-aktif">
+                                <CheckCircle2 size={11} /> Aktif
+                              </span>
+                            </td>
+
+                            {/* QR Code Column */}
+                            <td className="table-cell">
+                              <QrCell
+                                qrImage={rowQr.qrImage}
+                                qrExpiredAt={rowQr.qrExpiredAt}
+                              />
+                            </td>
+
+                            {/* Aksi (Actions) Column */}
+                            <td className="table-cell">
+                              <ActionCell
+                                id_eskul={eskul.id_eskul}
+                                qrImage={rowQr.qrImage}
+                                qrExpiredAt={rowQr.qrExpiredAt}
+                                loading={rowQr.loading}
+                                error={rowQr.error}
+                                menuOpen={rowQr.menuOpen}
+                                onGenerateQR={generateQR}
+                                onDeleteQR={deleteQRSession}
+                                onToggleMenu={() => toggleMenu(eskul.id_eskul)}
+                                onViewQR={() =>
+                                  setActiveModalId(eskul.id_eskul)
+                                }
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
               </div>
-              <div>
-                <p
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 13.5,
-                    color: "#0f172a",
-                    margin: 0,
-                  }}
-                >
-                  {eskul.nama_eskul}
-                </p>
-              </div>
-            </div>
-          </td>
-
-          {/* Kategori */}
-          <td className="table-cell">
-            <p
-              style={{
-                fontWeight: 700,
-                fontSize: 13,
-                color: "#0f172a",
-                margin: 0,
-              }}
-            >
-              {eskul.kategori}
-            </p>
-          </td>
-
-          {/* Pembina */}
-          <td className="table-cell">
-            <p
-              style={{
-                fontSize: 13,
-                color: "#64748b",
-                margin: 0,
-              }}
-            >
-              {eskul.pembina}
-            </p>
-          </td>
-
-          {/* Status */}
-          <td className="table-cell">
-            <span className="badge badge-aktif">
-              <CheckCircle2 size={11} /> Aktif
-            </span>
-          </td>
-
-          {/* QR Code Column */}
-          <td className="table-cell">
-            <QrCell
-              qrImage={rowQr.qrImage}
-              qrExpiredAt={rowQr.qrExpiredAt}
-            />
-          </td>
-
-          {/* Aksi (Actions) Column */}
-          <td className="table-cell">
-            <ActionCell
-              id_eskul={eskul.id_eskul}
-              qrImage={rowQr.qrImage}
-              qrExpiredAt={rowQr.qrExpiredAt}
-              loading={rowQr.loading}
-              error={rowQr.error}
-              menuOpen={rowQr.menuOpen}
-              onGenerateQR={generateQR}
-              onDeleteQR={deleteQRSession}
-              onToggleMenu={() => toggleMenu(eskul.id_eskul)}
-              onViewQR={() => setActiveModalId(eskul.id_eskul)}
-            />
-          </td>
-        </tr>
-      );
-    })
-  )}
-</tbody>
-              </table>
-            </div>
             )}
 
             {/* ── PAGINATION ── */}
             {!loadingEskul && eskulList.length > 0 && (
-            <div
-              style={{
-                padding: "14px 20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderTop: "1px solid #f1f5f9",
-                flexWrap: "wrap",
-                gap: 12,
-              }}
-            >
-              <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>
-                Halaman{" "}
-                <strong style={{ color: "#0f172a" }}>{activePage}</strong> dari{" "}
-                <strong style={{ color: "#0f172a" }}>1</strong>
-              </p>
-              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                <button
-                  className="page-btn page-btn-nav"
-                  onClick={() => setActivePage((p) => Math.max(1, p - 1))}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    width: "auto",
-                    padding: "0 12px",
-                  }}
-                >
-                  <ChevronLeft size={14} /> Sebelumnya
-                </button>
-                <button
-                  className={`page-btn${activePage === 1 ? " active" : ""}`}
-                  onClick={() => setActivePage(1)}
-                >
-                  1
-                </button>
-                <button
-                  className="page-btn page-btn-nav"
-                  onClick={() => setActivePage((p) => Math.min(1, p + 1))}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    width: "auto",
-                    padding: "0 12px",
-                  }}
-                >
-                  Selanjutnya <ChevronRight size={14} />
-                </button>
+              <div
+                style={{
+                  padding: "14px 20px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderTop: "1px solid #f1f5f9",
+                  flexWrap: "wrap",
+                  gap: 12,
+                }}
+              >
+                <p style={{ fontSize: 13, color: "#64748b", margin: 0 }}>
+                  Halaman{" "}
+                  <strong style={{ color: "#0f172a" }}>{activePage}</strong>{" "}
+                  dari <strong style={{ color: "#0f172a" }}>1</strong>
+                </p>
+                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                  <button
+                    className="page-btn page-btn-nav"
+                    onClick={() => setActivePage((p) => Math.max(1, p - 1))}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
+                      width: "auto",
+                      padding: "0 12px",
+                    }}
+                  >
+                    <ChevronLeft size={14} /> Sebelumnya
+                  </button>
+                  <button
+                    className={`page-btn${activePage === 1 ? " active" : ""}`}
+                    onClick={() => setActivePage(1)}
+                  >
+                    1
+                  </button>
+                  <button
+                    className="page-btn page-btn-nav"
+                    onClick={() => setActivePage((p) => Math.min(1, p + 1))}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
+                      width: "auto",
+                      padding: "0 12px",
+                    }}
+                  >
+                    Selanjutnya <ChevronRight size={14} />
+                  </button>
+                </div>
               </div>
-            </div>
             )}
           </div>
         </main>

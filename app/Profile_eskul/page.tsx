@@ -10,17 +10,26 @@ import {
   Plus,
   Users,
   Calendar,
-  MapPin,
 } from "lucide-react";
 import { getEskulPrimaryImage, getDefaultImagePath } from "@/lib/imageUtils";
 import { getEskulListAction,
-  getEskulCategoriesAction,
   deleteEskulAction,
   getUserInfoAction,
   checkPengurusHasEskulAction,
   type EskulProfile,
 } from "./action";
-import "./style.css";
+import styles from "./style.module.css";
+import { resolveCssModuleClasses } from "@/lib/resolveCssModuleClasses";
+
+const cx = (className: string) => resolveCssModuleClasses(styles, className);
+const ESKUL_CATEGORIES = [
+  "All",
+  "Olahraga",
+  "Keagamaan",
+  "Organisasi",
+  "Bahasa",
+  "Seni",
+] as const;
 
 // ─────────────────────────────────────────────────────────────
 // COMPONENT: Empty State
@@ -30,12 +39,12 @@ function EmptyState() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="empty-state"
+      className={cx("empty-state")}
     >
-      <div className="empty-state-content">
-        <div className="empty-state-icon">📚</div>
-        <h3 className="empty-state-title">Tidak Ada Ekstrakurikuler</h3>
-        <p className="empty-state-desc">
+      <div className={cx("empty-state-content")}>
+        <div className={cx("empty-state-icon")}>📚</div>
+        <h3 className={cx("empty-state-title")}>Tidak Ada Ekstrakurikuler</h3>
+        <p className={cx("empty-state-desc")}>
           Saat ini belum ada program ekstrakurikuler yang tersedia. Silakan coba
           lagi nanti.
         </p>
@@ -49,12 +58,12 @@ function EmptyState() {
 // ─────────────────────────────────────────────────────────────
 function SkeletonCard() {
   return (
-    <div className="skeleton-card">
-      <div className="skeleton skeleton-image" />
-      <div className="skeleton-body">
-        <div className="skeleton skeleton-title" />
-        <div className="skeleton skeleton-text" />
-        <div className="skeleton skeleton-text short" />
+    <div className={cx("skeleton-card")}>
+      <div className={cx("skeleton skeleton-image")} />
+      <div className={cx("skeleton-body")}>
+        <div className={cx("skeleton skeleton-title")} />
+        <div className={cx("skeleton skeleton-text")} />
+        <div className={cx("skeleton skeleton-text short")} />
       </div>
     </div>
   );
@@ -115,15 +124,15 @@ function EskulCard({ eskul, index, userRole, userId, isLoggedIn, onDelete }: Esk
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="eskul-card"
+      className={cx("eskul-card")}
     >
       {/* Card Image */}
-      <div className="card-image-wrapper">
+      <div className={cx("card-image-wrapper")}>
         {!imageError ? (
           <img
             src={getEskulPrimaryImage(eskul.nama_eskul)}
             alt={eskul.nama_eskul}
-            className="card-image"
+            className={cx("card-image")}
             onError={() => setImageError(true)}
             loading="lazy"
           />
@@ -131,34 +140,34 @@ function EskulCard({ eskul, index, userRole, userId, isLoggedIn, onDelete }: Esk
           <img
             src={getDefaultImagePath()}
             alt={eskul.nama_eskul}
-            className="card-image"
+            className={cx("card-image")}
             loading="lazy"
           />
         )}
-        <div className={`category-badge ${categoryClass}`}>
+        <div className={cx(`category-badge ${categoryClass}`)}>
           {eskul.kategori}
         </div>
       </div>
 
       {/* Card Content */}
-      <div className="card-content">
-        <h3 className="card-title">{eskul.nama_eskul}</h3>
+      <div className={cx("card-content")}>
+        <h3 className={cx("card-title")}>{eskul.nama_eskul}</h3>
 
         {/* Info Grid */}
-        <div className="card-info-grid">
+        <div className={cx("card-info-grid")}>
           {/* Pengurus */}
           {eskul.coach_nama && (
-            <div className="info-item">
-              <Users size={14} className="info-icon" />
-              <span className="info-text">Pengurus: {eskul.coach_nama}</span>
+            <div className={cx("info-item")}>
+              <Users size={14} className={cx("info-icon")} />
+              <span className={cx("info-text")}>Pengurus: {eskul.coach_nama}</span>
             </div>
           )}
 
           {/* Schedule */}
           {(eskul.hari_latihan || eskul.jam_latihan) && (
-            <div className="info-item">
-              <Calendar size={14} className="info-icon" />
-              <span className="info-text">
+            <div className={cx("info-item")}>
+              <Calendar size={14} className={cx("info-icon")} />
+              <span className={cx("info-text")}>
                 {eskul.hari_latihan}
                 {eskul.jam_latihan && ` (${eskul.jam_latihan})`}
               </span>
@@ -168,32 +177,32 @@ function EskulCard({ eskul, index, userRole, userId, isLoggedIn, onDelete }: Esk
         </div>
 
         {/* Description */}
-        <p className="card-description">
+        <p className={cx("card-description")}>
           {eskul.deskripsi || "Kegiatan rutin siswa SMKN 1 Cibinong."}
         </p>
       </div>
 
       {/* Card Footer - Buttons */}
-      <div className="card-footer">
+      <div className={cx("card-footer")}>
         {/* Register Button - Available to siswa/guest, NOT to admin/pembina who manage it */}
         {(isGuest || isSiswa || !isPembina) && (
-          <Link href={`/Daftar?eskul=${eskul.id_eskul}`} className="btn-small btn-primary">
+          <Link href={`/Daftar?eskul=${eskul.id_eskul}`} className={cx("btn-small btn-primary")}>
             Daftar
           </Link>
         )}
 
         {/* Edit/Delete Actions - Only for Admin/Pembina (if they own it) */}
         {canManage && (
-          <div className="db-actions">
+          <div className={cx("db-actions")}>
             <Link
               href={`/Crud_profile?edit=${eskul.id_eskul}`}
-              className="btn-small btn-secondary"
+              className={cx("btn-small btn-secondary")}
             >
               <Edit size={14} />
               Edit
             </Link>
             <button
-              className="btn-small btn-danger"
+              className={cx("btn-small btn-danger")}
               onClick={handleDelete}
               disabled={isDeleting}
             >
@@ -216,8 +225,7 @@ export default function ProfileEskulPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [userRole, setUserRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [canAdd, setCanAdd] = useState(false);
@@ -239,21 +247,14 @@ export default function ProfileEskulPage() {
         setLoading(true);
         console.log("[Profile_eskul] Loading data...");
 
-        // Fetch categories
-        const catResult = await getEskulCategoriesAction();
-        if (catResult.data) {
-          setCategories(["All", ...catResult.data]);
-          console.log("[Profile_eskul] ✅ Categories loaded:", catResult.data);
-        }
-
         // Fetch user info (role and ID)
         const userInfoResult = await getUserInfoAction();
-        
+
         // Check if user is logged in (has both userId and role)
         const userIsLoggedIn = !!(userInfoResult.userId && userInfoResult.role);
         setIsLoggedIn(userIsLoggedIn);
         console.log("[Profile_eskul] 🔐 User logged in:", userIsLoggedIn);
-        
+
         if (userInfoResult.userId) {
           setUserId(userInfoResult.userId);
           console.log("[Profile_eskul] ✅ User ID:", userInfoResult.userId);
@@ -334,18 +335,18 @@ export default function ProfileEskulPage() {
   };
 
   return (
-    <div className="profile-eskul-page">
+    <div className={cx("profile-page profile-eskul-page")}>
       {/* ──────────── MAIN CONTENT ──────────── */}
-      <main className="profile-eskul-main">
+      <main className={cx("profile-eskul-main")}>
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="page-hero"
+          className={cx("page-hero")}
         >
-          <div className="hero-content">
-            <h2 className="hero-title">Kategori Ekstrakurikuler</h2>
-            <p className="hero-desc">
+          <div className={cx("hero-content")}>
+            <h2 className={cx("hero-title")}>Kategori Ekstrakurikuler</h2>
+            <p className={cx("hero-desc")}>
               Jelajahi berbagai program ekstrakurikuler dan daftarkan diri Anda
               untuk mengembangkan potensi.
             </p>
@@ -353,7 +354,7 @@ export default function ProfileEskulPage() {
 
           {/* Add Button - Only for Admin or eligible Pengurus */}
           {showAddButton && (
-            <Link href="/Crud_profile?new=true" className="btn-add-eskul">
+            <Link href="/Crud_profile?new=true" className={cx("btn-add-eskul")}>
               <Plus size={18} />
               Tambah Ekstrakurikuler
             </Link>
@@ -361,29 +362,29 @@ export default function ProfileEskulPage() {
         </motion.div>
 
         {/* Controls Section */}
-        <div className="controls-section">
+        <div className={cx("controls-section")}>
           {/* Search Bar */}
-          <div className="search-wrapper">
-            <Search size={18} className="search-icon" />
+          <div className={cx("search-wrapper")}>
+            <Search size={18} className={cx("search-icon")} />
             <input
               type="text"
               placeholder="Cari ekstrakurikuler..."
-              className="search-input"
+              className={cx("search-input")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
           {/* Category Filter */}
-          <div className="filter-wrapper">
-            {categories.map((cat) => (
+          <div className={cx("filter-wrapper")}>
+            {ESKUL_CATEGORIES.map((cat) => (
               <motion.button
                 key={cat}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`filter-btn ${
+                className={cx(`filter-btn ${
                   selectedCategory === cat ? "active" : ""
-                }`}
+                }`)}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -393,8 +394,8 @@ export default function ProfileEskulPage() {
         </div>
 
         {/* Results Info */}
-        <div className="results-info">
-          <p className="results-count">
+        <div className={cx("results-info")}>
+          <p className={cx("results-count")}>
             Menampilkan{" "}
             <strong>{filteredEskuls.length}</strong>
             {filteredEskuls.length === 1
@@ -405,7 +406,7 @@ export default function ProfileEskulPage() {
 
         {/* Grid or Empty State */}
         {loading ? (
-          <div className="eskul-grid">
+          <div className={cx("eskul-grid")}>
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <SkeletonCard key={i} />
             ))}
@@ -423,7 +424,7 @@ export default function ProfileEskulPage() {
                 transition: { staggerChildren: 0.05 },
               },
             }}
-            className="eskul-grid"
+            className={cx("eskul-grid")}
           >
             {filteredEskuls.map((eskul, idx) => (
               <EskulCard

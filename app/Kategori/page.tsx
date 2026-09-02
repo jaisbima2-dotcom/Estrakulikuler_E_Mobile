@@ -1,32 +1,60 @@
 import { cookies } from "next/headers";
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 import { getNormalizedEskulFolder } from "@/lib/imageUtils";
 import KategoriClient from "./KategoriClient";
 import "./style.css";
 
+// Type for raw database record
+interface EskulRecord {
+  id_eskul: number;
+  nama_eskul: string;
+  kategori: string | null;
+  hari_latihan: string | null;
+  jam_latihan: string | null;
+  deskripsi: string | null;
+  id_pengurus: number | null;
+}
+
+// Type for processed Eskul
+interface Eskul {
+  id_eskul: number;
+  nama_eskul: string;
+  kategori: string;
+  hari_latihan: string;
+  jam_latihan: string;
+  deskripsi: string;
+  image_url: null;
+  id_pengurus: number | null;
+  slug: string;
+}
+
 export default async function KategoriPage() {
   // Fetch all eskulls from Supabase
-  const { data, error } = await supabaseAdmin
+  const { data } = await supabaseAdmin
     .from("profile_eskul")
-    .select("id_eskul,nama_eskul,kategori,hari_latihan,jam_latihan,deskripsi,id_pengurus")
+    .select(
+      "id_eskul,nama_eskul,kategori,hari_latihan,jam_latihan,deskripsi,id_pengurus",
+    )
     .order("nama_eskul", { ascending: true });
 
-  const eskuls = (data || []).map((e: any) => ({
-    id_eskul: e.id_eskul,
-    nama_eskul: e.nama_eskul,
-    kategori: e.kategori || "Umum",
-    hari_latihan: e.hari_latihan || "-",
-    jam_latihan: e.jam_latihan || "-",
-    deskripsi: e.deskripsi || "",
-    image_url: null, // No image_url column in DB - imageUtils will generate thumbnail path
-    id_pengurus: e.id_pengurus || null,
-    // slug used for detail link (keep existing normalization)
-    slug: getNormalizedEskulFolder(e.nama_eskul || ""),
-  }));
+  const eskuls = (data || []).map(
+    (e: EskulRecord): Eskul => ({
+      id_eskul: e.id_eskul,
+      nama_eskul: e.nama_eskul,
+      kategori: e.kategori || "Umum",
+      hari_latihan: e.hari_latihan || "-",
+      jam_latihan: e.jam_latihan || "-",
+      deskripsi: e.deskripsi || "",
+      image_url: null, // No image_url column in DB - imageUtils will generate thumbnail path
+      id_pengurus: e.id_pengurus || null,
+      // slug used for detail link (keep existing normalization)
+      slug: getNormalizedEskulFolder(e.nama_eskul || ""),
+    }),
+  );
 
   // Unique categories
   const categories = Array.from(
-    new Set((eskuls || []).map((s: any) => s.kategori || "Umum"))
+    new Set((eskuls || []).map((s: Eskul) => s.kategori || "Umum")),
   ).sort();
 
   // Read cookies to inform RBAC-aware UI (client will re-check too)

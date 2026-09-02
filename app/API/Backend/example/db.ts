@@ -6,7 +6,7 @@
  * Copy this pattern when creating new features
  */
 
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 
 /**
  * Example: Get all items

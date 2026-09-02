@@ -217,6 +217,7 @@ export default function DashboardAbsensiPage() {
   // User auth state (not read from client; server action will resolve httpOnly cookies)
   const [userId, setUserId] = useState<number | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // UI state
   const [activeFilter, setActiveFilter] = useState<"Semua" | StatusType>(
@@ -226,6 +227,57 @@ export default function DashboardAbsensiPage() {
   const [activePage, setActivePage] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Handle logout with atomic cleanup
+  const handleLogout = async (e: React.MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+
+    if (isLoggingOut) return; // Prevent double-click
+
+    setIsLoggingOut(true);
+    setDropdownOpen(false);
+    console.log("[Laporan_absensi] 🔐 Initiating logout...");
+
+    try {
+      console.log(
+        "[Laporan_absensi] 🗑️ Clearing localStorage and sessionStorage...",
+      );
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        console.log("[Laporan_absensi] ✅ Client storage cleared");
+      } catch (storageErr) {
+        console.warn(
+          "[Laporan_absensi] ⚠️ Storage clear error (non-fatal):",
+          storageErr,
+        );
+      }
+
+      console.log("[Laporan_absensi] 📡 Calling logout server action...");
+      const result = await logoutAction();
+
+      if (result.success) {
+        console.log("[Laporan_absensi] ✅ Server logout successful");
+      } else {
+        console.error(
+          "[Laporan_absensi] ⚠️ Server logout returned error:",
+          result.error,
+        );
+      }
+
+      console.log(
+        "[Laporan_absensi] ⏳ Waiting 300ms for server to process cookie deletion...",
+      );
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      console.log("[Laporan_absensi] 🔄 Performing hard redirect to /Login");
+      window.location.href = "/Login?logout=success";
+    } catch (err) {
+      console.error("[Laporan_absensi] ❌ Logout error:", err);
+      console.log("[Laporan_absensi] 🔄 Fallback: Hard redirect to /Login");
+      window.location.href = "/Login?logout=failed";
+    }
+  };
+
   // Data state
   const [realData, setRealData] = useState<AbsensiData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -234,14 +286,14 @@ export default function DashboardAbsensiPage() {
   // Load data on mount. Server action will resolve cookies (httpOnly).
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     const loadData = async () => {
       console.log("[Laporan_absensi] useEffect mounted - starting data load");
       await loadAbsensiData(1, abortController.signal);
     };
-    
+
     loadData();
-    
+
     // Cleanup on unmount
     return () => {
       console.log("[Laporan_absensi] useEffect unmount - cleanup");
@@ -253,17 +305,23 @@ export default function DashboardAbsensiPage() {
   async function loadAbsensiData(pageNum: number = 1, signal?: AbortSignal) {
     const actionId = Math.random().toString(36).substring(7);
     const timestamp = new Date().toISOString();
-    
-    console.log(`[Laporan_absensi:${actionId}] ⏱️ ${timestamp} - loadAbsensiData() START`);
-    console.log(`[Laporan_absensi:${actionId}] 📄 Page: ${pageNum}, signal: ${signal ? "provided" : "none"}`);
-    
+
+    console.log(
+      `[Laporan_absensi:${actionId}] ⏱️ ${timestamp} - loadAbsensiData() START`,
+    );
+    console.log(
+      `[Laporan_absensi:${actionId}] 📄 Page: ${pageNum}, signal: ${signal ? "provided" : "none"}`,
+    );
+
     setLoading(true);
     setError(null);
 
     try {
       // Timeout protection: max 15 seconds (increased from 10)
-      console.log(`[Laporan_absensi:${actionId}] ⏱️ Setting up 15s timeout protection`);
-      
+      console.log(
+        `[Laporan_absensi:${actionId}] ⏱️ Setting up 15s timeout protection`,
+      );
+
       let timeoutId: NodeJS.Timeout | null = null;
       const timeoutPromise = new Promise<never>((_, reject) => {
         timeoutId = setTimeout(() => {
@@ -273,17 +331,26 @@ export default function DashboardAbsensiPage() {
         }, 15000);
       });
 
-      console.log(`[Laporan_absensi:${actionId}] 🚀 Calling getAbsensiReportAction(page=${pageNum})...`);
-      console.log(`[Laporan_absensi:${actionId}] ℹ️ Will fetch with server-side cookie resolution`);
-      
-      const fetchPromise = getAbsensiReportAction(undefined, undefined, undefined, pageNum);
+      console.log(
+        `[Laporan_absensi:${actionId}] 🚀 Calling getAbsensiReportAction(page=${pageNum})...`,
+      );
+      console.log(
+        `[Laporan_absensi:${actionId}] ℹ️ Will fetch with server-side cookie resolution`,
+      );
+
+      const fetchPromise = getAbsensiReportAction(
+        undefined,
+        undefined,
+        undefined,
+        pageNum,
+      );
       const result: any = await Promise.race([fetchPromise, timeoutPromise]);
 
       // Clear timeout if race completed
       if (timeoutId) clearTimeout(timeoutId);
 
       console.log(`[Laporan_absensi:${actionId}] ✅ Server action returned`);
-      
+
       if (!result) {
         const msg = "No response from server action";
         console.error(`[Laporan_absensi:${actionId}] ❌ ${msg}`);
@@ -292,114 +359,156 @@ export default function DashboardAbsensiPage() {
         return;
       }
 
-      console.log(`[Laporan_absensi:${actionId}] 📊 Response: error=${result.error ? "yes" : "no"}, records=${result.data?.length || 0}, total=${result.count || "?"}`);
+      console.log(
+        `[Laporan_absensi:${actionId}] 📊 Response: error=${result.error ? "yes" : "no"}, records=${result.data?.length || 0}, total=${result.count || "?"}`,
+      );
 
       if (result.error) {
-        console.error(`[Laporan_absensi:${actionId}] ❌ Server error: ${result.error}`);
+        console.error(
+          `[Laporan_absensi:${actionId}] ❌ Server error: ${result.error}`,
+        );
         setError(result.error);
         setRealData([]);
         return;
       }
 
       const rawData = result.data || [];
-      console.log(`[Laporan_absensi:${actionId}] 📦 Received ${rawData.length} raw records to transform`);
+      console.log(
+        `[Laporan_absensi:${actionId}] 📦 Received ${rawData.length} raw records to transform`,
+      );
 
       if (rawData.length === 0) {
-        console.log(`[Laporan_absensi:${actionId}] ℹ️ No data returned (empty result)`);
+        console.log(
+          `[Laporan_absensi:${actionId}] ℹ️ No data returned (empty result)`,
+        );
         setRealData([]);
         return;
       }
 
       // Transform data to AbsensiData format
-      console.log(`[Laporan_absensi:${actionId}] 🔄 Starting data transformation...`);
-      
-      const transformedData: AbsensiData[] = rawData.map((item: any, index: number) => {
-        const statusMap: Record<string, StatusType> = {
-          "hadir": "Hadir",
-          "izin": "Izin",
-          "alpha": "Alpha",
-        };
+      console.log(
+        `[Laporan_absensi:${actionId}] 🔄 Starting data transformation...`,
+      );
 
-        // Extract name from nested user_profile structure
-        const nama = item.user_profile?.nama || item.user?.user_profile?.nama || item.user?.username || "N/A";
-        const inisial = nama
-          .split(" ")
-          .slice(0, 2)
-          .map((w: string) => w[0])
-          .join("")
-          .toUpperCase() || "?";
+      const transformedData: AbsensiData[] = rawData.map(
+        (item: any, index: number) => {
+          const statusMap: Record<string, StatusType> = {
+            hadir: "Hadir",
+            izin: "Izin",
+            alpha: "Alpha",
+          };
 
-        // Extract eskul name
-        const eskulName = item.eskul_nama || item.eskul?.nama_eskul || "N/A";
+          // Extract name from nested user_profile structure
+          const nama =
+            item.user_profile?.nama ||
+            item.user?.user_profile?.nama ||
+            item.user?.username ||
+            "N/A";
+          const inisial =
+            nama
+              .split(" ")
+              .slice(0, 2)
+              .map((w: string) => w[0])
+              .join("")
+              .toUpperCase() || "?";
 
-        // Format date
-        const tanggalFormatted = item.tanggal
-          ? new Date(item.tanggal + "T00:00:00").toLocaleDateString("id-ID", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })
-          : "-";
+          // Extract eskul name
+          const eskulName = item.eskul_nama || item.eskul?.nama_eskul || "N/A";
 
-        // Format time
-        const createdAt = item.created_at || item.waktu_scan;
-        const waktuScan = createdAt
-          ? new Date(createdAt).toLocaleTimeString("id-ID", {
-              hour: "2-digit",
-              minute: "2-digit",
-            }) + " WIB"
-          : "—";
+          // Format date
+          const tanggalFormatted = item.tanggal
+            ? new Date(item.tanggal + "T00:00:00").toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })
+            : "-";
 
-        const transformed: AbsensiData = {
-          id: item.id_absensi || index,
-          nama,
-          inisial,
-          avatarColor: ["#dbeafe", "#dcfce7", "#fef3c7", "#fee2e2", "#f3e8ff", "#fce7f3"][
-            (item.id_absensi || index) % 6
-          ],
-          ekskul: eskulName,
-          tanggal: tanggalFormatted,
-          status: statusMap[item.status?.toLowerCase()] || ("Hadir" as StatusType),
-          waktuScan,
-        };
+          // Format time
+          const createdAt = item.created_at || item.waktu_scan;
+          const waktuScan = createdAt
+            ? new Date(createdAt).toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit",
+              }) + " WIB"
+            : "—";
 
-        if (index < 3) {
-          console.log(`[Laporan_absensi:${actionId}] 📝 Transform[${index}]: ${transformed.nama} (${transformed.ekskul}) - ${transformed.status}`);
-        }
+          const transformed: AbsensiData = {
+            id: item.id_absensi || index,
+            nama,
+            inisial,
+            avatarColor: [
+              "#dbeafe",
+              "#dcfce7",
+              "#fef3c7",
+              "#fee2e2",
+              "#f3e8ff",
+              "#fce7f3",
+            ][(item.id_absensi || index) % 6],
+            ekskul: eskulName,
+            tanggal: tanggalFormatted,
+            status:
+              statusMap[item.status?.toLowerCase()] || ("Hadir" as StatusType),
+            waktuScan,
+          };
 
-        return transformed;
-      });
+          if (index < 3) {
+            console.log(
+              `[Laporan_absensi:${actionId}] 📝 Transform[${index}]: ${transformed.nama} (${transformed.ekskul}) - ${transformed.status}`,
+            );
+          }
 
-      console.log(`[Laporan_absensi:${actionId}] ✅ Transformation complete: ${transformedData.length} records transformed`);
+          return transformed;
+        },
+      );
+
+      console.log(
+        `[Laporan_absensi:${actionId}] ✅ Transformation complete: ${transformedData.length} records transformed`,
+      );
       console.log(`[Laporan_absensi:${actionId}] 📊 Data sample:`, {
         first: transformedData[0],
         count: transformedData.length,
       });
 
       setRealData(transformedData);
-      console.log(`[Laporan_absensi:${actionId}] ✅ State updated: realData set with ${transformedData.length} records`);
+      console.log(
+        `[Laporan_absensi:${actionId}] ✅ State updated: realData set with ${transformedData.length} records`,
+      );
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : String(err);
-      console.error(`[Laporan_absensi:${actionId}] ❌ Exception caught:`, errMsg);
-      console.error(`[Laporan_absensi:${actionId}] Stack:`, err instanceof Error ? err.stack : "no stack");
+      console.error(
+        `[Laporan_absensi:${actionId}] ❌ Exception caught:`,
+        errMsg,
+      );
+      console.error(
+        `[Laporan_absensi:${actionId}] Stack:`,
+        err instanceof Error ? err.stack : "no stack",
+      );
 
       // Determine error message
       let userErrorMsg = "Gagal memuat data absensi";
       if (errMsg.includes("timeout") || errMsg.includes("15 detik")) {
-        userErrorMsg = "Request timeout: Server tidak merespons dalam waktu yang ditentukan. Coba lagi.";
+        userErrorMsg =
+          "Request timeout: Server tidak merespons dalam waktu yang ditentukan. Coba lagi.";
       } else if (errMsg.includes("Session")) {
         userErrorMsg = "Session expired: Silakan login kembali";
       } else if (errMsg.includes("Unauthorized")) {
         userErrorMsg = "Anda tidak memiliki akses ke halaman ini";
       }
 
-      console.error(`[Laporan_absensi:${actionId}] User message: ${userErrorMsg}`);
+      console.error(
+        `[Laporan_absensi:${actionId}] User message: ${userErrorMsg}`,
+      );
       setError(userErrorMsg);
       setRealData([]);
     } finally {
-      console.log(`[Laporan_absensi:${actionId}] 🏁 FINALLY: Setting loading=false`);
+      console.log(
+        `[Laporan_absensi:${actionId}] 🏁 FINALLY: Setting loading=false`,
+      );
       setLoading(false);
-      console.log(`[Laporan_absensi:${actionId}] ✅ loadAbsensiData() COMPLETE`);
+      console.log(
+        `[Laporan_absensi:${actionId}] ✅ loadAbsensiData() COMPLETE`,
+      );
     }
   }
 
@@ -448,22 +557,17 @@ export default function DashboardAbsensiPage() {
 
             {dropdownOpen && (
               <div className="dropdown">
-                <p>👤 View Profile</p>
-                <p>✉️ Messages</p>
+                <p>View Profile</p>
+                <p>Messages</p>
                 <p
                   className="logout"
-                  onClick={async () => {
-                    console.log("[Laporan_absensi] Logout clicked");
-                    try {
-                      await logoutAction();
-                    } catch (err) {
-                      console.error("[Laporan_absensi] Logout error:", err);
-                      // Fallback: redirect manually if server action fails
-                      window.location.href = "/";
-                    }
+                  onClick={handleLogout}
+                  style={{
+                    cursor: isLoggingOut ? "not-allowed" : "pointer",
+                    opacity: isLoggingOut ? 0.6 : 1,
                   }}
                 >
-                  ↩️ Logout
+                  ↩ {isLoggingOut ? "Logging out..." : "Logout"}
                 </p>
               </div>
             )}
@@ -476,20 +580,48 @@ export default function DashboardAbsensiPage() {
         <div className="sidebar-section">
           <p className="sidebar-section-title">MENU UTAMA</p>
           <nav className="sidebar-menu">
-            <Link href="/Dashboard_pembina" className={pathname === "/Dashboard_pembina" ? "active" : ""}>
+            <Link
+              href="/Dashboard_pengawas"
+              className={pathname === "/Dashboard_pengawas" ? "active" : ""}
+            >
               Dashboard
             </Link>
-            <Link href="/Crud_profile" className={pathname === "/Crud_profile" ? "active" : ""}> Profile</Link>
-            <Link href="/Laporan_absensi" className={pathname === "/Laporan_absensi" ? "active" : ""}>
+            <Link
+              href="/Crud_profile"
+              className={pathname === "/Crud_profile" ? "active" : ""}
+            >
+              {" "}
+              Profile
+            </Link>
+            <Link
+              href="/Laporan_absensi"
+              className={pathname === "/Laporan_absensi" ? "active" : ""}
+            >
               Laporan
             </Link>
-            <Link href="/Generate_qr" className={pathname === "/Generate_qr" ? "active" : ""}> Generator QR Code</Link>
-            <Link href="/Verifikasi" className={pathname === "/Verifikasi" ? "active" : ""}> Verifikasi Data Pendaftar</Link>
-            <Link href="/Generate_kartu" className={pathname === "/Generate_kartu" ? "active" : ""}> Kartu Identitas</Link>
+            <Link
+              href="/Generate_qr"
+              className={pathname === "/Generate_qr" ? "active" : ""}
+            >
+              {" "}
+              Generator QR Code
+            </Link>
+            <Link
+              href="/Verifikasi"
+              className={pathname === "/Verifikasi" ? "active" : ""}
+            >
+              {" "}
+              Verifikasi Data Pendaftar
+            </Link>
+            <Link
+              href="/Generate_kartu"
+              className={pathname === "/Generate_kartu" ? "active" : ""}
+            >
+              {" "}
+              Kartu Identitas
+            </Link>
           </nav>
-          </div>
-
-       
+        </div>
       </aside>
 
       {/* ===== MAIN CONTENT ===== */}
@@ -545,7 +677,10 @@ export default function DashboardAbsensiPage() {
 
         {/* Loading State */}
         {loading && (
-          <div className="table-card shadow-soft" style={{ textAlign: "center", padding: "40px" }}>
+          <div
+            className="table-card shadow-soft"
+            style={{ textAlign: "center", padding: "40px" }}
+          >
             <div style={{ fontSize: "24px", marginBottom: "12px" }}>⏳</div>
             <div style={{ color: "#666" }}>Memuat data absensi...</div>
           </div>
@@ -553,15 +688,41 @@ export default function DashboardAbsensiPage() {
 
         {/* Error State */}
         {error && (
-          <div className="table-card shadow-soft" style={{ textAlign: "center", padding: "40px", backgroundColor: "#fef2f2" }}>
+          <div
+            className="table-card shadow-soft"
+            style={{
+              textAlign: "center",
+              padding: "40px",
+              backgroundColor: "#fef2f2",
+            }}
+          >
             <div style={{ fontSize: "24px", marginBottom: "12px" }}>❌</div>
-            <div style={{ color: "#dc2626", fontWeight: "500", marginBottom: "12px" }}>{error}</div>
-            <div style={{ fontSize: "12px", color: "#999", marginBottom: "16px", maxHeight: "60px", overflowY: "auto" }}>
-              💡 Jika masalah berlanjut, cek browser console untuk error detail atau hubungi admin.
+            <div
+              style={{
+                color: "#dc2626",
+                fontWeight: "500",
+                marginBottom: "12px",
+              }}
+            >
+              {error}
             </div>
-            <button 
+            <div
+              style={{
+                fontSize: "12px",
+                color: "#999",
+                marginBottom: "16px",
+                maxHeight: "60px",
+                overflowY: "auto",
+              }}
+            >
+              💡 Jika masalah berlanjut, cek browser console untuk error detail
+              atau hubungi admin.
+            </div>
+            <button
               onClick={() => {
-                console.log("[Laporan_absensi] User clicked 'Coba Lagi' button");
+                console.log(
+                  "[Laporan_absensi] User clicked 'Coba Lagi' button",
+                );
                 loadAbsensiData(1);
               }}
               style={{
@@ -583,145 +744,159 @@ export default function DashboardAbsensiPage() {
 
         {/* Empty State */}
         {!loading && !error && realData.length === 0 && (
-          <div className="table-card shadow-soft" style={{ textAlign: "center", padding: "60px 20px" }}>
+          <div
+            className="table-card shadow-soft"
+            style={{ textAlign: "center", padding: "60px 20px" }}
+          >
             <div style={{ fontSize: "40px", marginBottom: "12px" }}>📋</div>
-            <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "6px", color: "#666" }}>Belum ada data absensi</div>
-            <div style={{ fontSize: "14px", color: "#999" }}>Data absensi akan muncul setelah ada pemindaian QR</div>
+            <div
+              style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                marginBottom: "6px",
+                color: "#666",
+              }}
+            >
+              Belum ada data absensi
+            </div>
+            <div style={{ fontSize: "14px", color: "#999" }}>
+              Data absensi akan muncul setelah ada pemindaian QR
+            </div>
           </div>
         )}
 
         {/* Table Card */}
         {!loading && !error && realData.length > 0 && (
           <div className="table-card shadow-soft">
-          <div className="table-header">
-            <div>
-              <h2 className="table-title">Riwayat Absensi</h2>
-              <p className="table-count">{filtered.length} data ditemukan</p>
-            </div>
-            <div className="table-controls">
-              <div className="search-wrapper">
-                <span className="search-icon">
-                  <IconSearch />
-                </span>
-                <input
-                  type="text"
-                  placeholder="Cari nama atau ekskul..."
-                  className="search-input"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+            <div className="table-header">
+              <div>
+                <h2 className="table-title">Riwayat Absensi</h2>
+                <p className="table-count">{filtered.length} data ditemukan</p>
               </div>
-              <div className="filter-group">
-                {filters.map((f) => (
+              <div className="table-controls">
+                <div className="search-wrapper">
+                  <span className="search-icon">
+                    <IconSearch />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Cari nama atau ekskul..."
+                    className="search-input"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <div className="filter-group">
+                  {filters.map((f) => (
+                    <button
+                      key={f}
+                      className={`filter-btn ${activeFilter === f ? "active" : ""}`}
+                      onClick={() => setActiveFilter(f)}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama Anggota</th>
+                    <th>Ekskul</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Waktu Scan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((row) => (
+                    <tr key={row.id} className="table-row">
+                      <td>
+                        <div className="avatar-cell">
+                          <div
+                            className="member-avatar"
+                            style={{
+                              background: row.avatarColor,
+                              color: "#374151",
+                            }}
+                          >
+                            {row.inisial}
+                          </div>
+                          <span className="avatar-name">{row.nama}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="ekskul-chip">{row.ekskul}</span>
+                      </td>
+                      <td style={{ color: "#64748b", fontSize: "13px" }}>
+                        {row.tanggal}
+                      </td>
+                      <td>
+                        <StatusBadge status={row.status} />
+                      </td>
+                      <td
+                        style={{
+                          color: "#64748b",
+                          fontSize: "13px",
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        {row.waktuScan}
+                      </td>
+                      <td>
+                        <div className="action-group">
+                          <button className="btn-icon" title="Lihat Detail">
+                            <IconEye />
+                          </button>
+                          <button className="btn-icon delete" title="Hapus">
+                            <IconTrash />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {filtered.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        style={{
+                          textAlign: "center",
+                          padding: "30px",
+                          color: "#94a3b8",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Tidak ada data yang cocok.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="pagination-bar">
+              <span className="pagination-info">
+                Menampilkan {filtered.length} dari 10 data
+              </span>
+              <div className="pagination-pages">
+                {[1, 2].map((p) => (
                   <button
-                    key={f}
-                    className={`filter-btn ${activeFilter === f ? "active" : ""}`}
-                    onClick={() => setActiveFilter(f)}
+                    key={p}
+                    className={`page-btn ${activePage === p ? "active" : ""}`}
+                    onClick={() => setActivePage(p)}
                   >
-                    {f}
+                    {p}
                   </button>
                 ))}
               </div>
             </div>
           </div>
-
-          {/* Table */}
-          <div className="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nama Anggota</th>
-                  <th>Ekskul</th>
-                  <th>Tanggal</th>
-                  <th>Status</th>
-                  <th>Waktu Scan</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((row) => (
-                  <tr key={row.id} className="table-row">
-                    <td>
-                      <div className="avatar-cell">
-                        <div
-                          className="member-avatar"
-                          style={{
-                            background: row.avatarColor,
-                            color: "#374151",
-                          }}
-                        >
-                          {row.inisial}
-                        </div>
-                        <span className="avatar-name">{row.nama}</span>
-                      </div>
-                    </td>
-                    <td>
-                      <span className="ekskul-chip">{row.ekskul}</span>
-                    </td>
-                    <td style={{ color: "#64748b", fontSize: "13px" }}>
-                      {row.tanggal}
-                    </td>
-                    <td>
-                      <StatusBadge status={row.status} />
-                    </td>
-                    <td
-                      style={{
-                        color: "#64748b",
-                        fontSize: "13px",
-                        fontVariantNumeric: "tabular-nums",
-                      }}
-                    >
-                      {row.waktuScan}
-                    </td>
-                    <td>
-                      <div className="action-group">
-                        <button className="btn-icon" title="Lihat Detail">
-                          <IconEye />
-                        </button>
-                        <button className="btn-icon delete" title="Hapus">
-                          <IconTrash />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                {filtered.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={6}
-                      style={{
-                        textAlign: "center",
-                        padding: "30px",
-                        color: "#94a3b8",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Tidak ada data yang cocok.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          <div className="pagination-bar">
-            <span className="pagination-info">
-              Menampilkan {filtered.length} dari 10 data
-            </span>
-            <div className="pagination-pages">
-              {[1, 2].map((p) => (
-                <button
-                  key={p}
-                  className={`page-btn ${activePage === p ? "active" : ""}`}
-                  onClick={() => setActivePage(p)}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
         )}
       </main>
     </div>

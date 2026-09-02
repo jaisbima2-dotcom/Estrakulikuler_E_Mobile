@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap");
 
-:root {
+.profile-page {
   /* Color Variables */
   --navy: #1e3a5f;
   --navy-dark: #142847;
@@ -26,17 +26,17 @@
   --radius-image: 20px;
 }
 
-* {
+.profile-page, .profile-page * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
+.profile-page {
   scroll-behavior: smooth;
 }
 
-body {
+.profile-page {
   font-family: var(--font-primary);
   color: var(--text-dark);
   background-color: var(--gray-bg);
@@ -778,4 +778,27 @@ body {
 
 .card-fade-in {
   animation: fadeInUp 0.4s ease-out;
+}
+
+
+/* Responsive safeguards for the profile list. */
+.profile-eskul-main {
+  min-width: 0;
+}
+
+.eskul-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+@media (max-width: 480px) {
+  .page-hero {
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .btn-add-eskul,
+  .profile-eskul-cta-button {
+    width: 100%;
+    justify-content: center;
+  }
 }

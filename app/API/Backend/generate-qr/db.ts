@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/library/SupabaseClient";
+import { supabaseAdmin } from "@/lib/supabaseclient";
 import { deleteQRSession } from "@/app/API/Backend/delete-qr-session/db";
 
 /**
