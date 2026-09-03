@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/Login/logout";
+import { getNavbarSession } from "@/app/Login/session";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,25 +16,18 @@ export default function Navbar() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const pathname = usePathname();
 
-  // Load user session from cookies
+  // Session is httpOnly, so its state must be resolved server-side.
   useEffect(() => {
-    const getUserSession = () => {
-      // Parse cookies from document.cookie
-      const cookies = document.cookie.split(";").reduce(
-        (acc, cookie) => {
-          const [key, value] = cookie.trim().split("=");
-          acc[key] = decodeURIComponent(value);
-          return acc;
-        },
-        {} as Record<string, string>,
-      );
-
-      setUsername(cookies.username || null);
-      setUserId(cookies.user_id || null);
-      setUserRole(cookies.user_role || null);
+    let mounted = true;
+    void getNavbarSession().then((session) => {
+      if (!mounted) return;
+      setUsername(session?.username || null);
+      setUserId(session?.userId || null);
+      setUserRole(session?.role || null);
+    });
+    return () => {
+      mounted = false;
     };
-
-    getUserSession();
   }, [pathname]);
 
   // Sticky navbar shadow on scroll
@@ -148,19 +142,9 @@ export default function Navbar() {
             </Link>
           </li>
 
-          {/* User Session Links */}
+          {/* Dashboard based on role */}
           {isLoggedIn ? (
             <>
-              <li>
-                <Link
-                  href="/Profile_eskul"
-                  className={`nav-link ${isActive("/Profile_eskul") ? "active" : ""}`}
-                >
-                  Profil
-                </Link>
-              </li>
-
-              {/* Dashboard based on role */}
               <li>
                 <Link
                   href={

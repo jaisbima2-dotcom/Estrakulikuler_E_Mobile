@@ -793,6 +793,8 @@ export default function DashboardPage() {
 
   /* QR state map by id_eskul */
   const [qrStates, setQrStates] = useState<Record<number, RowQrState>>({});
+  const [sessionStart, setSessionStart] = useState(() => new Date().toISOString().slice(0, 16));
+  const [sessionEnd, setSessionEnd] = useState(() => new Date(Date.now() + 15 * 60_000).toISOString().slice(0, 16));
 
   // Handle logout with atomic cleanup
   const handleLogout = async (e: React.MouseEvent<HTMLParagraphElement>) => {
@@ -922,7 +924,9 @@ export default function DashboardPage() {
     try {
       // Import server action directly and let it resolve httpOnly cookies on the server
       const { generateQRAction } = await import("./action-rbac");
-      const result = await generateQRAction(id_eskul);
+      const startedAt = new Date(sessionStart).toISOString();
+      const expiredAt = new Date(sessionEnd).toISOString();
+      const result = await generateQRAction(id_eskul, startedAt, expiredAt);
 
       if (result.error) {
         throw new Error(result.error);
@@ -935,7 +939,7 @@ export default function DashboardPage() {
       // Format response disesuaikan dengan skema database qr_session kamu
       updateRowQrState(id_eskul, {
         loading: false,
-        qrImage: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${result.data.token}`, // Menghasilkan gambar QR dari token secara dinamis
+        qrImage: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(`${window.location.origin}/Absensi?token=${result.data.token}`)}`,
         qrToken: result.data.token,
         qrExpiredAt: result.data.expired_at,
         error: null,
@@ -1108,6 +1112,7 @@ export default function DashboardPage() {
               Kartu Identitas
             </Link>
           </nav>
+          <Link href="/Profile_eskul" className="dashboard-sidebar-back">← Kembali ke Halaman Utama</Link>
         </div>
       </aside>
 
@@ -1118,6 +1123,10 @@ export default function DashboardPage() {
           <h1 style={{ fontSize: 22, fontWeight: 800 }}>
             Jadwal Eskul & QR Code
           </h1>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", margin: "12px 0 4px" }}>
+            <label style={{ display: "grid", gap: 4 }}>Mulai sesi<input type="datetime-local" value={sessionStart} onChange={(event) => setSessionStart(event.target.value)} /></label>
+            <label style={{ display: "grid", gap: 4 }}>Berakhir sesi<input type="datetime-local" value={sessionEnd} onChange={(event) => setSessionEnd(event.target.value)} /></label>
+          </div>
 
           {/* ── FILTER BAR ── */}
           <div

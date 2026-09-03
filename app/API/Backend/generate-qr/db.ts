@@ -37,7 +37,9 @@ function calculateExpiredAt(): string {
  * @throws Error jika gagal insert ke database
  */
 export async function generateQRToken(
-  idEskul: number
+  idEskul: number,
+  startedAt?: string,
+  expiredAt?: string
 ): Promise<GenerateQRTokenResponse> {
   try {
     // Validate input
@@ -47,14 +49,20 @@ export async function generateQRToken(
 
     // Generate unique token
     const token = generateToken();
-    const expiredAt = calculateExpiredAt();
+    const sessionStartedAt = startedAt ? new Date(startedAt) : new Date();
+    const sessionExpiredAt = expiredAt ? new Date(expiredAt) : new Date(calculateExpiredAt());
+    if (Number.isNaN(sessionStartedAt.getTime()) || Number.isNaN(sessionExpiredAt.getTime()) || sessionExpiredAt <= sessionStartedAt) {
+      throw new Error("Waktu mulai dan berakhir sesi tidak valid");
+    }
+    const expiresAt = sessionExpiredAt.toISOString();
     const createdAt = new Date().toISOString();
 
     // DEBUG: Log all values BEFORE insert
     console.log("📝 [DEBUG] About to insert QR session with data:", {
       token,
       id_eskul: idEskul,
-      expired_at: expiredAt,
+      started_at: sessionStartedAt.toISOString(),
+      expired_at: expiresAt,
       created_at: createdAt,
     });
 
@@ -67,18 +75,29 @@ export async function generateQRToken(
     });
 
     // Insert ke qr_session table using array format
-    const { data, error } = await supabaseAdmin
+    let { data, error } = await supabaseAdmin
       .from("qr_session")
       .insert([
         {
           token,
           id_eskul: idEskul,
-          expired_at: expiredAt,
+          started_at: sessionStartedAt.toISOString(),
+          expired_at: expiresAt,
           created_at: createdAt,
         },
       ])
       .select()
       .single();
+
+    // Existing installations may not yet have the optional started_at column.
+    // Keep QR generation working while created_at represents the start time.
+    if (error?.code === "PGRST204" || error?.message.includes("started_at")) {
+      ({ data, error } = await supabaseAdmin
+        .from("qr_session")
+        .insert([{ token, id_eskul: idEskul, expired_at: expiresAt, created_at: createdAt }])
+        .select()
+        .single());
+    }
 
     // DEBUG: Log full error object if insert failed
     if (error) {
@@ -110,13 +129,13 @@ export async function generateQRToken(
     console.log("✅ QR token generated successfully:", {
       id_qr: idQr,
       token: token.substring(0, 8) + "...", // Log first 8 chars only for security
-      expired_at: expiredAt,
+      expired_at: expiresAt,
     });
 
     return {
       token,
       id_qr: idQr as string,
-      expired_at: expiredAt,
+      expired_at: expiresAt,
     };
   } catch (error) {
     console.error(
@@ -174,7 +193,9 @@ export async function cleanupExpiredQRSessions(): Promise<number> {
  */
 export async function generateQRTokenByPengurus(
   idEskul: number,
-  userId: number
+  userId: number,
+  startedAt?: string,
+  expiredAt?: string
 ): Promise<GenerateQRTokenResponse> {
   try {
     // ──────────────────────────────────────────────────────────────────
@@ -236,7 +257,7 @@ export async function generateQRTokenByPengurus(
     // ──────────────────────────────────────────────────────────────────
     // SECURITY CHECK 5: Generate QR token (only if validation passed)
     // ──────────────────────────────────────────────────────────────────
-    const result = await generateQRToken(idEskul);
+    const result = await generateQRToken(idEskul, startedAt, expiredAt);
 
     console.log("[generateQRTokenByPengurus] ✅ QR token generated successfully");
     console.log("[generateQRTokenByPengurus] 🔐 SECURITY CHECK COMPLETE\n");

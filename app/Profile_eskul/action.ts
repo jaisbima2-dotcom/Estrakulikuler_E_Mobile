@@ -1,8 +1,8 @@
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabaseclient";
-import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "@/lib/require-session";
 
 // Types
 export interface EskulProfile {
@@ -166,9 +166,9 @@ export async function deleteEskulAction(
     console.log("[deleteEskulAction] START - id_eskul:", idEskul);
 
     // Check auth - only admin and coach can delete
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("user_id")?.value;
-    const userRole = cookieStore.get("user_role")?.value;
+    const session = await getServerSession();
+    const userId = session?.userId;
+    const userRole = session?.role;
 
     if (!userId || !["admin", "pembina"].includes(userRole ?? "")) {
       console.warn("[deleteEskulAction] ❌ Unauthorized access attempt");
@@ -182,7 +182,7 @@ export async function deleteEskulAction(
       .eq("id_eskul", idEskul);
 
     if (userRole === "pembina") {
-      deleteQuery = deleteQuery.eq("id_pengurus", Number(userId));
+      deleteQuery = deleteQuery.eq("id_pengurus", userId);
     }
 
     const { error } = await deleteQuery;
@@ -212,8 +212,8 @@ export async function getUserRoleAction(): Promise<{
   error: string | null;
 }> {
   try {
-    const cookieStore = await cookies();
-    const role = cookieStore.get("user_role")?.value;
+    const session = await getServerSession();
+    const role = session?.role;
     console.log("[getUserRoleAction] Role:", role);
     return { role: role || null, error: null };
   } catch (err: any) {
@@ -231,13 +231,11 @@ export async function getUserInfoAction(): Promise<{
   error: string | null;
 }> {
   try {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("user_id")?.value;
-    const role = cookieStore.get("user_role")?.value;
+    const session = await getServerSession();
     
     return {
-      userId: userId ? Number(userId) : null,
-      role: role || null,
+      userId: session?.userId ?? null,
+      role: session?.role ?? null,
       error: null,
     };
   } catch (err: any) {
@@ -255,9 +253,9 @@ export async function checkPengurusHasEskulAction(): Promise<{
   error: string | null;
 }> {
   try {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("user_id")?.value;
-    const role = cookieStore.get("user_role")?.value;
+    const session = await getServerSession();
+    const userId = session?.userId;
+    const role = session?.role;
 
     // Only pembina should call this
     if (!userId || !(role === "pembina")) {
@@ -267,7 +265,7 @@ export async function checkPengurusHasEskulAction(): Promise<{
     const { data, error } = await supabaseAdmin
       .from("profile_eskul")
       .select("id_eskul")
-      .eq("id_pengurus", Number(userId))
+      .eq("id_pengurus", userId)
       .limit(1);
 
     if (error) {

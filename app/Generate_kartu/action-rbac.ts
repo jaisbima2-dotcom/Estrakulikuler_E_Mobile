@@ -1,7 +1,7 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { getKartuAnggotaList, getKartuByPengurus, type KartuAnggota } from "./action";
+import { getServerSession } from "@/lib/require-session";
 
 interface KartuResponse {
   error?: string;
@@ -15,13 +15,9 @@ interface KartuResponse {
  */
 export async function getKartuDataAction(): Promise<KartuResponse> {
   try {
-    // ─── Read cookies from server-side ───
-    const cookieStore = await cookies();
-    const userId_cookie = cookieStore.get("user_id")?.value;
-    const role_cookie = cookieStore.get("user_role")?.value;
-
-    const userId_final = userId_cookie ? parseInt(userId_cookie, 10) : null;
-    const role_final = role_cookie;
+    const session = await getServerSession();
+    const userId_final = session?.userId ?? null;
+    const role_final = session?.role ?? null;
 
     console.log("[getKartuDataAction] Session - userId:", userId_final, "role:", role_final);
 

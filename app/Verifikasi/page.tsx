@@ -327,6 +327,7 @@ export default function VerifikasiPage() {
               Kartu Identitas
             </Link>
           </nav>
+          <Link href="/Profile_eskul" className="dashboard-sidebar-back">← Kembali ke Halaman Utama</Link>
         </div>
       </aside>
 

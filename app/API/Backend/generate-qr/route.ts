@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateQRToken } from "./db";
 import QRCode from "qrcode";
+import { readSessionValue, SESSION_COOKIE } from "@/lib/auth-session";
+import { checkPengurusEskulAccess } from "@/lib/roleBasedAccess";
 
 /**
  * Request body type untuk generate QR
@@ -141,6 +143,14 @@ export async function POST(
     }
 
     const { id_eskul } = validatedBody;
+
+    const session = await readSessionValue(request.cookies.get(SESSION_COOKIE)?.value);
+    if (!session || !["admin", "pembina"].includes(session.role)) {
+      return NextResponse.json({ success: false, message: "Unauthorized", error: "Akses ditolak" }, { status: 401 });
+    }
+    if (session.role === "pembina" && !(await checkPengurusEskulAccess(session.userId, id_eskul))) {
+      return NextResponse.json({ success: false, message: "Forbidden", error: "Eskul bukan milik pembina" }, { status: 403 });
+    }
 
     console.log("✅ Request validated. Processing:", { id_eskul });
 

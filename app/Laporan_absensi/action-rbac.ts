@@ -1,7 +1,7 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabaseclient";
+import { getServerSession } from "@/lib/require-session";
 
 interface AbsensiReportResponse {
   error?: string;
@@ -261,19 +261,14 @@ export async function getAbsensiReportAction(
     const serverTime = new Date().toISOString();
     const actionId = Math.random().toString(36).substring(7);
 
-    // Resolve cookies server-side if params not provided
-    const cookieStore = await cookies();
-    const cookieUserId = cookieStore.get("user_id")?.value;
-    const cookieRole = cookieStore.get("user_role")?.value;
-
-    const userId = userIdParam || (cookieUserId ? parseInt(cookieUserId, 10) : 0);
-    const rawRole = roleParam || cookieRole || "";
-    const role = rawRole.toLowerCase();
+    const session = await getServerSession();
+    const userId = session?.userId || 0;
+    const role = session?.role || "";
 
     console.log(`[getAbsensiReportAction:${actionId}] ⏱️ Server time: ${serverTime}`);
     console.log(`[getAbsensiReportAction:${actionId}] 🆔 Action ID: ${actionId}`);
-    console.log(`[getAbsensiReportAction:${actionId}] 👤 userId: ${userId} (param=${userIdParam}, cookie=${cookieUserId})`);
-    console.log(`[getAbsensiReportAction:${actionId}] 🔐 role: ${role} (param=${roleParam}, cookie=${cookieRole})`);
+    console.log(`[getAbsensiReportAction:${actionId}] 👤 userId: ${userId}`);
+    console.log(`[getAbsensiReportAction:${actionId}] 🔐 role: ${role}`);
     console.log(`[getAbsensiReportAction:${actionId}] 📄 eskulId: ${eskulId || "none"}, page: ${page}`);
 
     if (!userId) {
@@ -288,7 +283,7 @@ export async function getAbsensiReportAction(
       return result;
     }
 
-    if (role === "pembina" || role === "pengurus" || role === "coach") {
+    if (role === "pembina") {
       console.log(`[getAbsensiReportAction:${actionId}] ✅ Pembina/Coach access - fetching absensi for user ${userId}`);
       const result = await getAbsensiByPengurus(userId, eskulId, page);
       console.log(`[getAbsensiReportAction:${actionId}] ✅ Pembina query complete: ${result.data?.length || 0} records, total=${result.count}`);

@@ -518,6 +518,7 @@ export default function AnggotaPage() {
               Kartu Identitas
             </Link>
           </nav>
+          <Link href="/Profile_eskul" className="dashboard-sidebar-back">← Kembali ke Halaman Utama</Link>
         </div>
       </aside>
 

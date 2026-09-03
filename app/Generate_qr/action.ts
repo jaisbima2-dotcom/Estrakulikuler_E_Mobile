@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabaseclient";
 import { deleteQRSession } from "@/app/API/Backend/delete-qr-session/db";
+import { requireRole } from "@/lib/require-session";
 
 export interface EskulItem {
   id_eskul: number;
@@ -156,8 +157,8 @@ async function getEskulByPengurus(userId: number) {
  * Pembina/Pengurus: get only their own eskul (filtered by id_pengurus)
  */
 export async function getEskulListAction(
-  userIdParam?: number,
-  roleParam?: string
+  _userIdParam?: number,
+  _roleParam?: string
 ): Promise<{ data: EskulItem[] | null; error: string | null }> {
   try {
     const actionId = Math.random().toString(36).substring(7);
@@ -166,31 +167,19 @@ export async function getEskulListAction(
     console.log(`[getEskulListAction:${actionId}] ⏱️ ${timestamp} - START`);
 
     // ─── Read cookies from server-side ───
-    const cookieStore = await cookies();
-    const userId_cookie = cookieStore.get("user_id")?.value;
-    const role_cookie = cookieStore.get("user_role")?.value;
-    
-    const userId = userIdParam || (userId_cookie ? parseInt(userId_cookie, 10) : 0);
-    const role = roleParam || role_cookie || "";
-    const normalizedRole = normalizeRole(role);
+    const session = await requireRole(["admin", "pembina"]);
+    const userId = session?.userId || 0;
+    const normalizedRole = session?.role || "";
 
-    console.log(`[getEskulListAction:${actionId}] 👤 userId: ${userId} (cookie=${userId_cookie}, param=${userIdParam})`);
-    console.log(`[getEskulListAction:${actionId}] 🔐 role: ${normalizedRole} (cookie=${role_cookie}, param=${roleParam})`);
+    console.log(`[getEskulListAction:${actionId}] 👤 userId: ${userId}`);
+    console.log(`[getEskulListAction:${actionId}] 🔐 role: ${normalizedRole}`);
 
     // ─── Validate session ───
-    if (!userId_cookie && !userIdParam) {
-      console.error(`[getEskulListAction:${actionId}] ❌ No user_id in cookie or param`);
+    if (!session) {
+      console.error(`[getEskulListAction:${actionId}] ❌ Session tidak valid`);
       return {
         data: null,
         error: "Anda harus login terlebih dahulu",
-      };
-    }
-
-    if (!role_cookie && !roleParam) {
-      console.error(`[getEskulListAction:${actionId}] ❌ No role in cookie or param`);
-      return {
-        data: null,
-        error: "Role tidak ditemukan, silakan login kembali",
       };
     }
 
@@ -228,19 +217,21 @@ export async function getEskulListAction(
  */
 export async function deleteQRAction(
   idEskul: number,
-  userId: number,
-  role: string
+  _userId: number,
+  _role: string
 ): Promise<{ success: boolean; message: string; error?: string }> {
   try {
     // ────────────────────────────────────────────────────────────────
     // DEBUG LOGS - Server Action
     // ────────────────────────────────────────────────────────────────
     console.log("[DELETE ACTION] 🔐 SERVER ACTION START");
-    console.log("[DELETE ACTION] role:", role);
-    console.log("[DELETE ACTION] userId:", userId);
     console.log("[DELETE ACTION] idEskul:", idEskul);
-
-    console.log("[DELETE ACTION] ⚠️ Development override - deleting QR for any role", role);
+    const session = await requireRole(["admin", "pembina"]);
+    if (!session) return { success: false, message: "Unauthorized", error: "Akses ditolak" };
+    if (session.role === "pembina") {
+      const { data: ownedEskul } = await supabaseAdmin.from("profile_eskul").select("id_eskul").eq("id_eskul", idEskul).eq("id_pengurus", session.userId).maybeSingle();
+      if (!ownedEskul) return { success: false, message: "Forbidden", error: "Eskul bukan milik pembina" };
+    }
     const response = await deleteQRSession(idEskul);
     console.log("[DELETE ACTION] Response:", response);
 

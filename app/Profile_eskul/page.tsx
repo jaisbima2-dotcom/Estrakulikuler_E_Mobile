@@ -31,6 +31,28 @@ const ESKUL_CATEGORIES = [
   "Seni",
 ] as const;
 
+const PROFILE_ROUTES: Record<string, string> = {
+  basket: "/Profile_Basket",
+  badminton: "/Profile_badminton",
+  futsal: "/Profile_futsal",
+  "english club": "/Profile_inggris",
+  "bahasa inggris": "/Profile_inggris",
+  "japanese club": "/Profile_jepang",
+  "bahasa jepang": "/Profile_jepang",
+  paskibra: "/Profile_paskibra",
+  pmr: "/Profile_pmr",
+  pramuka: "/Profile_pramuka",
+  rohis: "/Profile_rohis",
+  rokris: "/Profile_rokris",
+  tari: "/Profile_tari",
+  voli: "/Profile_voli",
+  volleyball: "/Profile_voli",
+};
+
+function getProfileRoute(namaEskul: string) {
+  return PROFILE_ROUTES[namaEskul.toLowerCase().trim()];
+}
+
 // ─────────────────────────────────────────────────────────────
 // COMPONENT: Empty State
 // ─────────────────────────────────────────────────────────────
@@ -118,6 +140,7 @@ function EskulCard({ eskul, index, userRole, userId, isLoggedIn, onDelete }: Esk
   };
 
   const categoryClass = categoryColors[eskul.kategori] || "badge-default";
+  const profileRoute = getProfileRoute(eskul.nama_eskul);
 
   return (
     <motion.div
@@ -184,8 +207,15 @@ function EskulCard({ eskul, index, userRole, userId, isLoggedIn, onDelete }: Esk
 
       {/* Card Footer - Buttons */}
       <div className={cx("card-footer")}>
-        {/* Register Button - Available to siswa/guest, NOT to admin/pembina who manage it */}
-        {(isGuest || isSiswa || !isPembina) && (
+        {/* Semua akun yang sudah login dapat langsung membuka detail profil. */}
+        {isLoggedIn && profileRoute && (
+          <Link href={profileRoute} className={cx("btn-small btn-primary")}>
+            Lihat Profil
+          </Link>
+        )}
+
+        {/* Pendaftaran hanya tersedia untuk pengunjung. */}
+        {!isLoggedIn && isGuest && (
           <Link href={`/Daftar?eskul=${eskul.id_eskul}`} className={cx("btn-small btn-primary")}>
             Daftar
           </Link>

@@ -2,16 +2,11 @@
 
 import { loginUser } from "@/app/API/Backend/Login/db";
 import { cookies } from "next/headers";
+import { createSessionValue, SESSION_COOKIE } from "@/lib/auth-session";
 
 export async function loginAction(formData: FormData) {
   const serverTime = new Date().toISOString();
   console.log(`[LOGIN ACTION] ⏱️ Server time: ${serverTime}`);
-  console.log(
-    "[LOGIN ACTION] ENV CHECK:",
-    "URL=", process.env.NEXT_PUBLIC_SUPABASE_URL,
-    "SERVICE_ROLE_KEY_PRESENT=", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    "ANON_KEY_PRESENT=", Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
-  );
 
   const username =
     (formData.get("username") as string)?.trim() ?? "";
@@ -19,8 +14,6 @@ export async function loginAction(formData: FormData) {
   const password =
     (formData.get("password") as string)?.trim() ?? "";
 
-  console.log("[LOGIN ACTION] 📝 Payload - Username:", username);
-  console.log("[LOGIN ACTION] 📝 Payload - Password length:", password.length);
 
   if (!username || !password) {
     console.log("[LOGIN ACTION] Username or password is empty");
@@ -48,7 +41,10 @@ export async function loginAction(formData: FormData) {
     };
   }
 
-  console.log("[LOGIN ACTION] Login successful, user_role:", data.role);
+  const role = String(data.role || "").toLowerCase();
+  if (!['admin', 'pembina', 'siswa'].includes(role)) {
+    return { error: "Role akun tidak valid" };
+  }
 
   // Set cookies server-side for middleware
   try {
@@ -67,23 +63,17 @@ export async function loginAction(formData: FormData) {
       cookieOptions.secure
     );
 
-    cookieStore.set("user_id", String(data.id_user || data.id || ""), cookieOptions);
-    console.log("[LOGIN ACTION] Set user_id cookie");
-
-    cookieStore.set("user_role", String(data.role || ""), cookieOptions);
-    console.log("[LOGIN ACTION] Set user_role cookie:", data.role);
-
-    cookieStore.set("username", String(data.username || ""), cookieOptions);
-    console.log("[LOGIN ACTION] Set username cookie");
+    const userId = Number(data.id_user || data.id);
+    if (!Number.isInteger(userId) || userId <= 0) return { error: "ID akun tidak valid" };
+    cookieStore.set(
+      SESSION_COOKIE,
+      await createSessionValue({ userId, role: role as "admin" | "pembina" | "siswa", username: String(data.username || "") }),
+      cookieOptions
+    );
   } catch (cookieErr) {
     console.error("[LOGIN ACTION] Error setting cookies:", cookieErr);
+    return { error: "Sesi login tidak dapat dibuat. Coba kembali." };
   }
 
-  console.log("[LOGIN ACTION] Returning data:", {
-    id_user: data.id_user,
-    role: data.role,
-    username: data.username,
-  });
-
-  return { data };
+  return { data: { id_user: data.id_user, role, username: data.username } };
 }

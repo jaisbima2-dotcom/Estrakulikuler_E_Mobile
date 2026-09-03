@@ -6,19 +6,6 @@ import { loginAction } from "./action";
 import { logoutAction } from "./logout";
 import "./style.css";
 
-function setCookie(name: string, value: string, days: number = 7): void {
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/; SameSite=Strict`;
-  console.log(`✓ Cookie set: ${name}`);
-}
-
-function deleteCookie(name: string): void {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  console.log(`✓ Cookie deleted: ${name}`);
-}
-
 const IconArrowRight = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
     <path d="M5 12h14M12 5l7 7-7 7" />
@@ -113,24 +100,9 @@ export default function LoginClient() {
 
       if (res?.data) {
         console.log("[HANDLESUBMIT] Login successful, role:", res.data.role);
-        setCookie("user_id", String(res.data.id_user || res.data.id || ""), 7);
-        setCookie("user_role", String(res.data.role || ""), 7);
-        setCookie("username", String(res.data.username || ""), 7);
-
-        console.log("[HANDLESUBMIT] Client cookies set");
-
-        let redirectUrl = "/Beranda_user";
-        if (res.data.role === "admin") {
-          redirectUrl = "/Dashboard_pengawas";
-          console.log("[HANDLESUBMIT] Admin user (pengawas), redirecting to /Dashboard_pengawas");
-        } else if (res.data.role === "pembina") {
-          // Pembina user redirected to coach dashboard
-          redirectUrl = "/Dashboard_pembina";
-          console.log("[HANDLESUBMIT] Pembina user, redirecting to /Dashboard_pembina");
-        } else if (res.data.role === "siswa") {
-          redirectUrl = "/Beranda_user";
-          console.log("[HANDLESUBMIT] Siswa user, redirecting to /Beranda_user");
-        }
+        // Semua pengguna yang berhasil login masuk ke halaman utama eskul.
+        // RBAC tetap diterapkan saat mengakses halaman dan aksi lanjutan.
+        const redirectUrl = "/Profile_eskul";
 
         console.log("[HANDLESUBMIT] Redirecting to:", redirectUrl);
         window.location.href = redirectUrl;

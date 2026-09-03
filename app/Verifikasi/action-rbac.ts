@@ -1,9 +1,9 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { getPendaftaranByPengurus, getAllPendaftaran, type StatusDaftar } from "@/app/API/Backend/verifikasi/verifikasi.db";
 import { verifikasiPendaftaran } from "@/app/API/Backend/verifikasi/verifikasi.db";
 import { getEskulFilterByRole } from "@/lib/roleBasedAccess";
+import { getServerSession } from "@/lib/require-session";
 
 interface VerifikasiResponse {
   error?: string;
@@ -21,22 +21,16 @@ export async function getVerifikasiDataAction(
   statusFilter?: StatusDaftar
 ): Promise<VerifikasiResponse> {
   try {
-    // ─── Read cookies from server-side ───
-    const cookieStore = await cookies();
-    const userId_cookie = cookieStore.get("user_id")?.value;
-    const role_cookie = cookieStore.get("user_role")?.value;
-    
-    
-    console.log("[getVerifikasiDataAction] Session - userId from cookie:", userId_cookie, "role:", role_cookie);
+    const session = await getServerSession();
 
     // ─── Validate session exists ───
-    if (!userId_cookie || !role_cookie) {
+    if (!session) {
       console.log("[getVerifikasiDataAction] ❌ ERROR: Session not found");
       return { error: "Anda harus login terlebih dahulu" };
     }
 
-    const userId_final = parseInt(userId_cookie, 10);
-    const role_final = role_cookie;
+    const userId_final = session.userId;
+    const role_final = session.role;
 
     console.log(`[getVerifikasiDataAction] Getting data for user: ${userId_final}, role: ${role_final}`);
 

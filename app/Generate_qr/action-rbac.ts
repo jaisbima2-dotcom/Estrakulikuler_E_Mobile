@@ -1,8 +1,8 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { generateQRToken, generateQRTokenByPengurus } from "@/app/API/Backend/generate-qr/db";
 import { supabaseAdmin } from "@/lib/supabaseclient";
+import { requireRole } from "@/lib/require-session";
 
 
 interface GenerateQRResponse {
@@ -61,32 +61,17 @@ function normalizeRole(role?: string): string {
   return normalized;
 }
 
-async function resolveUserContext(
-  userId?: number,
-  role?: string
-): Promise<{ userId: number; role: string; rawRole: string }> {
-  const cookieStore = await cookies();
-  const cookieUserId = cookieStore.get("user_id")?.value;
-  const cookieRole = cookieStore.get("user_role")?.value;
-
-  const normalizedRole = normalizeRole(role) || normalizeRole(cookieRole);
-  const resolvedUserId = userId || (cookieUserId ? parseInt(cookieUserId, 10) : 0);
-
-  return {
-    userId: resolvedUserId,
-    role: normalizedRole,
-    rawRole: cookieRole || role || "",
-  };
-}
-
 export async function generateQRAction(
   idEskul: number,
-  userId?: number,
-  role?: string
+  startedAt?: string,
+  expiredAt?: string
 ): Promise<GenerateQRResponse> {
   try {
-    const userContext = await resolveUserContext(userId, role);
-    const { userId: resolvedUserId, role: resolvedRole, rawRole } = userContext;
+    const session = await requireRole(["admin", "pembina"]);
+    if (!session) return { error: "Unauthorized: silakan login sebagai admin atau pembina" };
+    const resolvedUserId = session.userId;
+    const resolvedRole = session.role;
+    const rawRole = session.role;
 
     console.log(
       `[generateQRAction] Generating QR for eskul: ${idEskul}, user: ${resolvedUserId}, role: ${resolvedRole} (rawRole=${rawRole})`
@@ -94,7 +79,7 @@ export async function generateQRAction(
 
     if (resolvedRole === "admin") {
       console.log("[generateQRAction] Admin role - generating QR for any eskul");
-      const response = await generateQRToken(idEskul);
+      const response = await generateQRToken(idEskul, startedAt, expiredAt);
       return { data: response };
     }
 
@@ -114,7 +99,7 @@ export async function generateQRAction(
       console.log(
         `[generateQRAction] Pembina role - validating ownership and generating QR for id_eskul ${idEskul}`
       );
-      const response = await generateQRTokenByPengurus(idEskul, resolvedUserId);
+      const response = await generateQRTokenByPengurus(idEskul, resolvedUserId, startedAt, expiredAt);
       return { data: response };
     }
 

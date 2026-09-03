@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +38,10 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("[DEBUG][ErrorBoundary] Component stack:", errorInfo.componentStack);
+    console.error(
+      "[DEBUG][ErrorBoundary] Component stack:",
+      errorInfo.componentStack,
+    );
     console.error("[DEBUG][ErrorBoundary] Full error:", error);
 
     this.setState({
@@ -204,9 +208,9 @@ export default class ErrorBoundary extends React.Component<Props, State> {
                   e.currentTarget.style.backgroundColor = "#3b82f6";
                 }}
               >
-                🔄 Coba Lagi
+                Coba Lagi
               </button>
-              <a
+              <Link
                 href="/"
                 style={{
                   padding: "10px 24px",
@@ -229,7 +233,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
                 }}
               >
                 🏠 Kembali ke Beranda
-              </a>
+              </Link>
             </div>
 
             {/* Footer Help Text */}
@@ -241,7 +245,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
                 textAlign: "center",
               }}
             >
-              Jika masalah terus berlanjut, hubungi tim support atau refresh halaman Anda.
+              Jika masalah terus berlanjut, hubungi tim support atau refresh
+              halaman Anda.
             </p>
           </div>
         </div>

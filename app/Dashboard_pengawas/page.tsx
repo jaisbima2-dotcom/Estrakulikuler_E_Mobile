@@ -251,6 +251,7 @@ export default function Dashboardpembina() {
             <Link href="/Verifikasi" > Verifikasi Data Pendaftar</Link>
             <Link href="/Generate_kartu"> Kartu Identitas</Link>
           </nav>
+          <Link href="/Profile_eskul" className="dashboard-sidebar-back">← Kembali ke Halaman Utama</Link>
           </div>
       </aside>
 

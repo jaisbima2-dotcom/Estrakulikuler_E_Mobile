@@ -18,9 +18,10 @@ export async function logoutAction() {
 
     // 2. Delete all authentication cookies
     const cookieStore = await cookies();
-    console.log("[logoutAction] 🗑️ Deleting cookies: user_id, user_role, username, token");
+    console.log("[logoutAction] 🗑️ Deleting session cookies");
     
     try {
+      cookieStore.delete("app_session");
       cookieStore.delete("user_id");
       cookieStore.delete("user_role");
       cookieStore.delete("username");

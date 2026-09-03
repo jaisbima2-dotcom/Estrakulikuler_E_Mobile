@@ -148,6 +148,64 @@ html, body {
   margin-bottom: 14px;
 }
 
+/* Camera preview rendered by html5-qrcode. Kept separate from the legacy
+   scanner illustration so the live video always has a visible container. */
+.camera-preview {
+  display: none;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 10px;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 24px;
+  background: rgba(2, 8, 20, 0.86);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.13);
+}
+
+.camera-preview.is-visible {
+  display: block;
+}
+
+#attendance-reader {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #020814;
+}
+
+#attendance-reader video {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+#attendance-reader img {
+  display: none;
+}
+
+.camera-caption {
+  margin: 10px 0 2px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.scanner-card input {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--navy-border);
+  border-radius: 12px;
+  outline: none;
+}
+
+.scanner-card input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px var(--cyan-glow-soft);
+}
+
 /* SCANNER BOX */
 .scanner-box-wrapper {
   width: 100%;

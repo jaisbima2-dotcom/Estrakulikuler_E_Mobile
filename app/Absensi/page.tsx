@@ -1,151 +1,93 @@
 "use client";
 
-import "./style.css";
-import {
-  Star,
-  QrCode,
-  Shield,
-} from "lucide-react";
+import { Html5Qrcode } from "html5-qrcode";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import "./style.css";
 
-function QRScannerContent() {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-  const [scanStatus, setScanStatus] = useState<"idle"|"processing"|"success"|"error">("idle");
-  const [scanMessage, setScanMessage] = useState("");
+type Result = { kind: "idle" | "loading" | "success" | "error"; message: string };
 
-  useEffect(() => {
-    if (!token) return;
-    setScanStatus("processing");
-    fetch("/API/Backend/scan-validate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
-    })
-      .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          setScanStatus("success");
-          setScanMessage("Absensi berhasil dicatat!");
-        } else {
-          setScanStatus("error");
-          setScanMessage(data.error || "Gagal mencatat absensi");
-        }
-      })
-      .catch(() => {
-        setScanStatus("error");
-        setScanMessage("Terjadi kesalahan jaringan");
-      });
-  }, [token]);
-
-  return (
-    <div className="page-root">
-      <div className="mobile-container">
-
-        {/* HEADER */}
-        <div className="header">
-          <div className="avatar-logo">
-            <Star size={18} strokeWidth={2.2} />
-          </div>
-          <div className="header-title">ExtraHub</div>
-          <div className="header-subtitle">Sistem Absensi Ekskul</div>
-        </div>
-
-        {/* QR ICON SECTION */}
-        <div className="qr-icon-section">
-          <QrCode size={28} strokeWidth={1.8} />
-          <p className="qr-section-text">
-            Scan QR untuk melakukan absensi kehadiran
-          </p>
-        </div>
-
-        {/* SCANNER CARD */}
-        <div className="scanner-card">
-
-          {/* STATUS MESSAGE */}
-          {scanStatus !== "idle" && (
-            <div style={{
-              padding: "12px 16px",
-              borderRadius: 12,
-              marginBottom: 16,
-              background: scanStatus === "success" ? "rgba(0,230,118,0.15)" : scanStatus === "processing" ? "rgba(0,229,255,0.1)" : "rgba(255,68,68,0.15)",
-              color: scanStatus === "success" ? "#00e676" : scanStatus === "processing" ? "#00e5ff" : "#ff4444",
-              fontSize: 14,
-              fontWeight: 500,
-              textAlign: "center",
-            }}>
-              {scanStatus === "processing" ? "⏳ Memproses absensi..." : scanStatus === "success" ? "✅ " + scanMessage : "❌ " + scanMessage}
-            </div>
-          )}
-
-          {/* SCANNER BOX */}
-          <div className="scanner-box-wrapper">
-            <div className="scanner-box">
-              {/* Grid */}
-              <div className="scanner-grid" />
-
-              {/* Corner brackets */}
-              <div className="corner-tl" />
-              <div className="corner-tr" />
-              <div className="corner-bl" />
-              <div className="corner-br" />
-
-              {/* Center QR icon */}
-              <div className="scanner-center-icon">
-                <QrCode size={72} strokeWidth={1.2} />
-              </div>
-
-              {/* Scan line */}
-              <div className="scan-line" />
-            </div>
-          </div>
-
-          {/* STATUS PILL */}
-          <div className="status-pill">
-            <QrCode size={14} strokeWidth={1.8} />
-            <span className="status-pill-text">Menunggu QR Code...</span>
-          </div>
-
-          {/* STATUS RESULT BADGES */}
-          <div className="status-badges">
-            <div className="badge badge-success">✓ Sukses</div>
-            <div className="badge badge-invalid">✕ Invalid</div>
-            <div className="badge badge-expired">⚠ Expired</div>
-          </div>
-
-        </div>
-
-        {/* BOTTOM INFO */}
-        <div className="bottom-info">
-          <Shield size={16} strokeWidth={1.6} />
-          <p className="bottom-info-text">
-            Pastikan QR ditampilkan oleh pembina ekskul
-          </p>
-        </div>
-
-      </div>
-    </div>
-  );
+function tokenFromValue(value: string) {
+  try {
+    const url = new URL(value);
+    return url.searchParams.get("token") || value;
+  } catch {
+    return value.trim();
+  }
 }
 
-export default function QRScannerPage() {
+export default function AbsensiPage() {
+  const params = useSearchParams();
+  const scanner = useRef<Html5Qrcode | null>(null);
+  const [cameraActive, setCameraActive] = useState(false);
+  const [manualCode, setManualCode] = useState("");
+  const [result, setResult] = useState<Result>({ kind: "idle", message: "Aktifkan kamera atau masukkan kode QR." });
+
+  const submitToken = useCallback(async (rawValue: string) => {
+    const token = tokenFromValue(rawValue);
+    if (!token) return setResult({ kind: "error", message: "Kode QR tidak ditemukan." });
+    setResult({ kind: "loading", message: "Memvalidasi absensi…" });
+    try {
+      const response = await fetch("/API/Backend/scan-validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token }) });
+      const data = await response.json();
+      setResult(response.ok && data.success ? { kind: "success", message: data.message || "Absensi berhasil dicatat." } : { kind: "error", message: data.error || "Absensi gagal diproses." });
+    } catch {
+      setResult({ kind: "error", message: "Koneksi bermasalah. Coba kembali." });
+    }
+  }, []);
+
+  const stopCamera = useCallback(async () => {
+    if (!scanner.current) return;
+    try { await scanner.current.stop(); } catch { /* already stopped */ }
+    try { await scanner.current.clear(); } catch { /* already cleared */ }
+    scanner.current = null;
+    setCameraActive(false);
+  }, []);
+
+  const startCamera = async () => {
+    setResult({ kind: "loading", message: "Menyiapkan kamera…" });
+    // Reader must be visible before html5-qrcode initializes the video stream.
+    setCameraActive(true);
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    const instance = new Html5Qrcode("attendance-reader");
+    scanner.current = instance;
+    try {
+      await instance.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 240, height: 240 } }, async (decodedText) => {
+        await stopCamera();
+        await submitToken(decodedText);
+      }, () => undefined);
+      setResult({ kind: "idle", message: "Arahkan kamera ke QR dari pembina." });
+    } catch {
+      scanner.current = null;
+      setCameraActive(false);
+      setResult({ kind: "error", message: "Kamera tidak dapat diakses. Periksa izin kamera atau gunakan kode manual." });
+    }
+  };
+
+  useEffect(() => {
+    const token = params.get("token");
+    const timer = token ? window.setTimeout(() => { void submitToken(token); }, 0) : undefined;
+    return () => { if (timer) window.clearTimeout(timer); void stopCamera(); };
+  }, [params, stopCamera, submitToken]);
+
   return (
-    <Suspense fallback={
-      <div className="page-root">
-        <div className="mobile-container">
-          <div className="header">
-            <div className="avatar-logo">
-              <Star size={18} strokeWidth={2.2} />
-            </div>
-            <div className="header-title">ExtraHub</div>
-            <div className="header-subtitle">Sistem Absensi Ekskul</div>
-          </div>
-          <p style={{ textAlign: "center", color: "#64748b", marginTop: "40px" }}>Memuat...</p>
+    <main className="page-root">
+      <section className="mobile-container" aria-live="polite">
+        <header className="header"><div className="header-title">Absensi Ekstrakurikuler</div><p className="header-subtitle">Scan QR dari pembina untuk mencatat kehadiran.</p></header>
+        <section className={`camera-preview ${cameraActive ? "is-visible" : ""}`} aria-label="Pratinjau kamera QR">
+          <div id="attendance-reader" />
+          {cameraActive && <p className="camera-caption">Arahkan QR ke dalam area kamera</p>}
+        </section>
+        <div className={`scanner-card ${result.kind}`}>
+          <p>{result.message}</p>
+          {!cameraActive ? <button type="button" className="reg-btn" onClick={() => void startCamera()} disabled={result.kind === "loading"}>Aktifkan Kamera QR</button> : <button type="button" className="reg-btn" onClick={() => void stopCamera()}>Tutup Kamera</button>}
         </div>
-      </div>
-    }>
-      <QRScannerContent />
-    </Suspense>
+        <form onSubmit={(event: FormEvent<HTMLFormElement>) => { event.preventDefault(); void submitToken(manualCode); }} className="scanner-card">
+          <label htmlFor="manual-code">Tidak bisa memakai kamera?</label>
+          <input id="manual-code" value={manualCode} onChange={(event) => setManualCode(event.target.value)} placeholder="Tempel token atau URL QR" />
+          <button type="submit" className="reg-btn" disabled={result.kind === "loading"}>Kirim Kode</button>
+        </form>
+      </section>
+    </main>
   );
 }

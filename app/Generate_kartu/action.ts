@@ -1,8 +1,8 @@
 "use server";
 
 import { supabaseAdmin } from "@/lib/supabaseclient";
-import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { getServerSession, requireRole } from "@/lib/require-session";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -203,11 +203,11 @@ export async function deleteKartu(
     console.log("[deleteKartu] START - id_anggota:", id_anggota);
 
     // Check auth
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("user_id")?.value;
-    const userRole = cookieStore.get("user_role")?.value;
+    const session = await requireRole(["admin", "pembina"]);
+    const userId = session?.userId;
+    const userRole = session?.role;
 
-    if (!userId || !["admin", "coach"].includes(userRole ?? "")) {
+    if (!userId || !userRole) {
       console.warn("[deleteKartu] ❌ Unauthorized access attempt");
       return {
         success: false,
@@ -248,11 +248,11 @@ export async function updateKartuData(
     console.log("[updateKartuData] START - id_anggota:", id_anggota, "updates:", updates);
 
     // Check auth
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("user_id")?.value;
-    const userRole = cookieStore.get("user_role")?.value;
+    const session = await requireRole(["admin", "pembina"]);
+    const userId = session?.userId;
+    const userRole = session?.role;
 
-    if (!userId || !["admin", "coach"].includes(userRole ?? "")) {
+    if (!userId || !userRole) {
       console.warn("[updateKartuData] ❌ Unauthorized access attempt");
       return {
         success: false,
@@ -354,10 +354,9 @@ export async function getKartuListAction(): Promise<{
   error: string | null;
 }> {
   try {
-    // Read cookies from server-side
-    const cookieStore = await cookies();
-    const userId_cookie = cookieStore.get("user_id")?.value;
-    const role_cookie = cookieStore.get("user_role")?.value;
+    const session = await getServerSession();
+    const userId_cookie = session?.userId;
+    const role_cookie = session?.role;
 
     console.log(
       "[getKartuListAction] Fetching kartu - userId:",
@@ -378,7 +377,7 @@ export async function getKartuListAction(): Promise<{
     }
 
     // Only admin and coach can view kartu
-    if (!["admin", "coach"].includes(role_cookie)) {
+    if (!["admin", "pembina"].includes(role_cookie)) {
       console.error("[getKartuListAction] ❌ Unauthorized role:", role_cookie);
       return {
         data: null,
@@ -386,14 +385,14 @@ export async function getKartuListAction(): Promise<{
       };
     }
 
-    const userId = parseInt(userId_cookie, 10);
+    const userId = userId_cookie;
 
     if (role_cookie === "admin") {
       console.log("[getKartuListAction] ✅ Admin - fetching all kartu");
       return await getKartuAnggotaList();
     }
 
-    if (role_cookie === "coach") {
+    if (role_cookie === "pembina") {
       console.log("[getKartuListAction] ✅ Pengurus - fetching own kartu");
       return await getKartuByPengurus(userId);
     }

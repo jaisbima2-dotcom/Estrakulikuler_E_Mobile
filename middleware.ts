@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readSessionValue, SESSION_COOKIE } from "@/lib/auth-session";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const serverTime = new Date().toISOString();
 
@@ -29,20 +30,20 @@ export function middleware(request: NextRequest) {
     "/Generate_kartu",
     "/Crud_profile",
     "/Beranda_user",
+    "/Absensi",
     "/scan",
     "/Profile_eskul",
     "/Kategori",
   ];
 
   // Check if current route is protected
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route)) || pathname.startsWith("/Profile_");
 
   if (isProtectedRoute) {
     // Get user_role from cookie (session indicator)
-    const userRole = request.cookies.get("user_role")?.value;
-    const userId = request.cookies.get("user_id")?.value;
+    const session = await readSessionValue(request.cookies.get(SESSION_COOKIE)?.value);
+    const userRole = session?.role;
+    const userId = session?.userId;
     console.log(
       `[DEBUG][Middleware] 🔒 Protected route ${pathname}, user_id: ${userId || "NOT_FOUND"}, user_role: ${userRole || "NOT_FOUND"}`
     );
@@ -66,6 +67,7 @@ export function middleware(request: NextRequest) {
         "/Laporan_absensi",
         "/Crud_profile",
         "/Profile_eskul",
+        "/Profile_",
         "/Kategori",
       ],
       pembina: [
@@ -76,9 +78,10 @@ export function middleware(request: NextRequest) {
         "/Laporan_absensi",
         "/Verifikasi",
         "/Profile_eskul",
+        "/Profile_",
         "/Kategori",
       ],
-      siswa: ["/Beranda_user", "/scan", "/Profile_eskul", "/Kategori"],
+      siswa: ["/Beranda_user", "/Absensi", "/Profile_eskul", "/Profile_", "/Kategori"],
     };
 
     // Check if user's role has access to this route

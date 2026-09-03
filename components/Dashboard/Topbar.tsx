@@ -27,8 +27,8 @@ export function Topbar() {
 
           {dropdownOpen && (
             <div className="dropdown">
-              <p>👤 View Profile</p>
-              <p>✉️ Messages</p>
+              <p> View Profile</p>
+              <p> Messages</p>
               <p
                 className="logout"
                 onClick={async () => {
@@ -42,7 +42,7 @@ export function Topbar() {
                   }
                 }}
               >
-                ↩️ Logout
+                 Logout
               </p>
             </div>
           )}
